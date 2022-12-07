@@ -1,5 +1,5 @@
 import axios from "axios";
-  
+  var ip="192.168.1.105"
 export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -10,7 +10,7 @@ export const fetchAllBooks=()=>{
         //   console.log(book.data)
         //     // dispatch(GetAllBook(book.data))
         // });
-          const response=await fetch("http://192.168.43.48:3000/book/getAllBooks");
+          const response=await fetch("http://"+ip+":3000/book/getAllBooks");
           const books=await response.json();
           // console.log(books)
           dispatch(GetAllBook(books))
@@ -26,7 +26,7 @@ export const fetchSearchBook=(key)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://192.168.43.48:3000/book/"+key);
+          const response=await fetch("http://"+ip+":3000/book/"+key);
           const books=await response.json();
           // console.log(books)
           dispatch(SearchBook(books))
@@ -42,7 +42,7 @@ export const fetchCreateBooks=(book)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("http://192.168.43.48:3000/book/createBook", book)
+        await axios.post("http://"+ip+":3000/book/createBook", book)
         .then(book => {
           console.log(book.data)
             dispatch(CreatNewBook(book.data))
@@ -60,7 +60,7 @@ export const fetchUpdateBooks=(book)=>{
   return (dispatch)=>{
     const updateData = async () => {
       try {
-        await axios.put("http://192.168.43.48:3000/book/"+book.id, book)
+        await axios.put("http://"+ip+":3000/book/"+book.id, book)
         .then(book => {
             dispatch(UpdateBook(book.data))
         });
@@ -77,7 +77,7 @@ export const fetchDeleteBooks=(id)=>{
   return (dispatch)=>{
     const deleteData = async () => {
       try {
-        await axios.delete("http://192.168.43.48:3000/book/"+id)
+        await axios.delete("http://"+ip+":3000/book/"+id)
         .then(book => {
             dispatch(DeleteBook(book.data))
         });

@@ -1,7 +1,9 @@
+const accountController=require("../controllers/accountController");
 const router=require("express").Router();
-// router.get("/getAllUsers",authenticateToken,userController.getAllUsers);
-// router.post("/createUser",authenticateToken,userController.createUser)
-// router.delete("/deleteUser",userController.deleteUser)
-// router.get("/",middlewareController.verifyToken,userController.getAllUsers);
-// router.delete("/:username",middlewareController.verifyTokenAndAdminAuth,userController.deleteUser);
+router.get("/getAllAccounts",accountController.getAllAccounts);
+router.get("/:id",accountController.GetAccount);
+router.post("/login",accountController.loginAccount)
+router.post("/getAccount",accountController.createAccount)
+router.put("/:id",accountController.UpdateAccount)
+router.delete("/:id",accountController.DeleteAccount)
 module.exports=router;

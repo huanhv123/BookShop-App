@@ -3,8 +3,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // const admin = require("firebase-admin");
 // var serviceAccount = require("./keys/key_test.json");
-// const accountRoute = require("./routes/account");
+const accountRoute = require("./routes/account");
 const bookRoute = require("./routes/book");
+const billRoute = require("./routes/bill");
+const cartRoute = require("./routes/cart");
+const categoryRoute = require("./routes/category");
+const customerRoute = require("./routes/customer");
+
+
 const { db } =require("./config/admin");
 const app=express();
 
@@ -13,13 +19,17 @@ const app=express();
 // });
 // module.exports.db = db.firestore(); 
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
 // app.use("/account/",accountRoute);
 app.use("/book/",bookRoute);
+app.use("/account/",accountRoute);
+app.use("/bill/",billRoute);
+app.use("/cart/",cartRoute);
+app.use("/category/",categoryRoute);
+app.use("/customer/",customerRoute);
 
 const items = [
   {
@@ -46,69 +56,65 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get('/courses',async (req,res)=>{
-  res.status(201).json(items)
-})
 
-app.get("/getAllBooks", async function (req, res) {
+app.get("/getAllSubscribes", async function (req, res) {
   try {
-    db.collection("books").get().then((snapshot) => {
-      const data = snapshot.docs.map((value) => (
-        {
-          id: value.id,
-          ...value.data(),
-        }
-      ));
-      res.status(200).json(data);
+    let arrToken = []
+    db.collection("subscribes").get().then((snapshot) => {
+      snapshot.docs.map((value) => {
+        arrToken.push((value.data()).tokenDivice)
+      }
+      );
+      res.status(200).json(arrToken);
     })
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-app.get("/getAllItems", async function (req, res) {
-  try {
-    db.collection("items").get().then((snapshot) => {
-      const data = snapshot.docs.map((value) => (
-        {
-          id: value.id,
-          ...value.data(),
-        }
-      ));
-      res.status(200).json(data);
-    })
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// app.get("/getAllItems", async function (req, res) {
+//   try {
+//     db.collection("items").get().then((snapshot) => {
+//       const data = snapshot.docs.map((value) => (
+//         {
+//           id: value.id,
+//           ...value.data(),
+//         }
+//       ));
+//       res.status(200).json(data);
+//     })
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
-// // app.get("/getNameClothes", async function (req, res) {
-// //   let resul = await (
-// //     await firestore.collection("listclothes").get()
-// //   ).docs.map((value) => {
-// //     let temp = value.data().name+"-"+value.id;
-// //     return temp;
-// //   });
-// //   res.send(resul);
-// // });
+// // // app.get("/getNameClothes", async function (req, res) {
+// // //   let resul = await (
+// // //     await firestore.collection("listclothes").get()
+// // //   ).docs.map((value) => {
+// // //     let temp = value.data().name+"-"+value.id;
+// // //     return temp;
+// // //   });
+// // //   res.send(resul);
+// // // });
 
-app.post("/createBook", async (req, res) => {
-  try {
-    const newBook={
-      "nameBook": "Gói mùa",
-      "author": "ggggg",
-      "price": 63000,
-    }
-    db.collection("books").add(newBook);
-    res.status(200).send({
-      status:'success',
-      mes:"Thêm mới book",
-      data:newBook
-    })
-} catch (err) {
-    res.status(500).json(err.message);
-}
-});
+// app.post("/createBook", async (req, res) => {
+//   try {
+//     const newBook={
+//       "nameBook": "Gói mùa",
+//       "author": "ggggg",
+//       "price": 63000,
+//     }
+//     db.collection("books").add(newBook);
+//     res.status(200).send({
+//       status:'success',
+//       mes:"Thêm mới book",
+//       data:newBook
+//     })
+// } catch (err) {
+//     res.status(500).json(err.message);
+// }
+// });
 // // "id":"ABCs9OPFvtYi5c2spt5A",
 // // "price": 385000,
 // // "name": "Áo Khoác Hoodie Y Nguyên Bản 18+ Ver15",

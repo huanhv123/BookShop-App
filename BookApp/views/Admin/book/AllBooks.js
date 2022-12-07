@@ -29,9 +29,6 @@ const AllBooks = ({ navigation }) => {
     if(isSuccess==true){
         dispatch(fetchAllBooks())
     }
-    if(isSuccess==false && books.length==0){
-      dispatch(fetchAllBooks())
-    }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
     dispatch(fetchSearchBook(key))

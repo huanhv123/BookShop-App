@@ -80,21 +80,44 @@ const bookController = {
             res.status(500).json(err);
         }
     },
-
+    GetALLBooksByCate: async (req, res) => {
+        try {
+            let temp = [];
+            await db.collection("books")
+                .where('idCate', '==', req.params.idCate).get()
+                .then((res) => {
+                    res.forEach((element) => {
+                        temp.push({
+                            id: element.id,
+                            ...element.data(),
+                        });
+                    });
+                });
+            res.status(200).json(temp);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
     CreateBook: async (req, res) => {
         try {
-            let newBook={
+            let newBook = {
                 "nameBook": req.body.nameBook,
                 "author": req.body.author,
                 "price": req.body.price,
-                "descriptionBook":req.body.descriptionBook,
-                "photoBook":req.body.photoBook
+                "descriptionBook": req.body.descriptionBook,
+                "photoBook": req.body.photoBook,
+                "idCate":req.body.idCate,
+                "newPrice":req.body.newPrice,
+                "oldPrice":req.body.oldPrice,
+                "quantityRemaining":req.body.quantityRemaining,
+                "releaseDate":req.body.releaseDate,
+                "view":req.body.view
               }
             //   console.log(newBook)
             await db.collection("books").add(newBook);
             res.status(200).json({mse:true})
         } catch (err) {
-            res.status(500).json(false);
+            res.status(500).json({mse:false});
         }
     },
     UpdateBook: async (req, res) => {
@@ -103,15 +126,21 @@ const bookController = {
                 "nameBook": req.body.nameBook,
                 "author": req.body.author,
                 "price": req.body.price,
-                "descriptionBook":req.body.descriptionBook,
-                "photoBook":req.body.photoBook
+                "descriptionBook": req.body.descriptionBook,
+                "photoBook": req.body.photoBook,
+                "idCate":req.body.idCate,
+                "newPrice":req.body.newPrice,
+                "oldPrice":req.body.oldPrice,
+                "quantityRemaining":req.body.quantityRemaining,
+                "releaseDate":req.body.releaseDate,
+                "view":req.body.view
               }
             //   console.log(newBook)
             //   console.log(req.params.id)
             await db.collection("books").doc(req.params.id).update(newBook);
             res.status(200).json({mse:true})
         } catch (err) {
-            res.status(500).json(false);
+            res.status(500).json({mse:false});
         }
     },
     DeleteBook: async (req, res) => {
@@ -119,7 +148,7 @@ const bookController = {
             await db.collection("books").doc(req.params.id).delete();
             res.status(200).json({mse:true})
         } catch (err) {
-            res.status(500).json(false);
+            res.status(500).json({mse:false});
         }
     }
 }
