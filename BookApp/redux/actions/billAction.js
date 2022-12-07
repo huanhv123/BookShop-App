@@ -4,8 +4,13 @@ export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-       
-          const response=await fetch("http://localhost:3000/book/getAllBooks");
+        // console.log("dsdsf")
+        // await axios.get("http://localhost:3000/book/getAllBooks")
+        // .then(book => {
+        //   console.log(book.data)
+        //     // dispatch(GetAllBook(book.data))
+        // });
+          const response=await fetch("http://192.168.1.7:3000/book/getAllBooks");
           const books=await response.json();
           // console.log(books)
           dispatch(GetAllBook(books))
@@ -21,7 +26,7 @@ export const fetchSearchBook=(key)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://localhost:3000/book/"+key);
+          const response=await fetch("http://192.168.1.7:3000/book/"+key);
           const books=await response.json();
           // console.log(books)
           dispatch(SearchBook(books))
@@ -37,7 +42,7 @@ export const fetchCreateBooks=(book)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("http://localhost:3000/book/createBook", book)
+        await axios.post("http://192.168.1.7:3000/book/createBook", book)
         .then(book => {
           console.log(book.data)
             dispatch(CreatNewBook(book.data))
@@ -55,7 +60,7 @@ export const fetchUpdateBooks=(book)=>{
   return (dispatch)=>{
     const updateData = async () => {
       try {
-        await axios.put("http://localhost:3000/book/"+book.id, book)
+        await axios.put("http://192.168.1.7:3000/book/"+book.id, book)
         .then(book => {
             dispatch(UpdateBook(book.data))
         });
@@ -72,7 +77,7 @@ export const fetchDeleteBooks=(id)=>{
   return (dispatch)=>{
     const deleteData = async () => {
       try {
-        await axios.delete("http://localhost:3000/book/"+id)
+        await axios.delete("http://192.168.1.7:3000/book/"+id)
         .then(book => {
             dispatch(DeleteBook(book.data))
         });
@@ -85,37 +90,43 @@ export const fetchDeleteBooks=(id)=>{
   }
 }
 
-export const GetAllBook = (books) => {
+export const GetAllBill = (bills) => {
   return {
-    type: 'GET_ALL_BOOK',
-    payload:books
+    type: 'GET_ALL_BILL',
+    payload:bills
   };
 };
-
-export const SearchBook = (books) => {
-  return {
-    type: 'SEARCH_BOOK',
-    payload:books
-  };
-};
-
-export const CreatNewBook = (mes) => {
+export const GetBill = (bills) => {
     return {
-      type: 'CREATE_NEW_BOOK',
+      type: 'GET_BILL',
+      payload:bills
+    };
+  };
+
+export const SEARCH_BILL = (bills) => {
+  return {
+    type: 'SEARCH_BILL',
+    payload:bills
+  };
+};
+
+export const CreatNewBill = (mes) => {
+    return {
+      type: 'CREATE_NEW_BILL',
       payload:mes
     };
 };
 
-export const UpdateBook = (mes) => {
+export const UpdateBill = (mes) => {
   return {
-      type: 'UPDATE_BOOK',
+      type: 'UPDATE_BILL',
       payload: mes,
   };
 };
 
-export const DeleteBook = (mes) => {
+export const DeleteBill = (mes) => {
   return {
-      type: 'DELETE_BOOK',
+      type: 'DELETE_BILL',
       payload: mes,
   };
 };

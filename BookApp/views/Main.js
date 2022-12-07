@@ -116,10 +116,10 @@ const Main = () => {
         <Main.Navigator
             initialRouteName='Home'
         >
-            {/* <Main.Screen name='CustomerSreen' component={CustomerNavigatorScreen}
+            <Main.Screen name='CustomerSreen' component={CustomerNavigatorScreen}
                 options={{
                     headerShown: false
-                }} /> */}
+                }} />
             <Main.Screen name='AdminSreen' component={AdminNavigatorScreen}
                 options={{
                     headerShown: false

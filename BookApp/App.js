@@ -11,64 +11,67 @@ import Login from './views/Login';
 import Register from './views/Register';
 import Main from './views/Main';
 import 'react-native-gesture-handler';
-// // import Count from './redux/screens/Count';
-// // import Cart from './redux/screens/Cart';
+import Profile from './views/Customer/Profile';
+import EditProfile from './views/Customer/EditProfile';
+// import Count from './redux/screens/Count';
+// import Cart from './redux/screens/Cart';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {/* <Tab.Navigator
-      screenOptions={{
-        headerShown:false
-      }}
-      >
-        <Tab.Screen name="HomeScreen" component={HomeNavigatorScreen} 
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" color={color} size={size} />
-          ),
-        }}
-        />
-        <Tab.Screen name="CartScreen" component={Cart} initialRouteName='Cart'
-          options={{
-            headerShown:true,
-            tabBarLabel: 'Cart',
-            tabBarIcon: ({ color,size }) => (
-            <Ionicons name="cart" color={color} size={size} />
-          ),
-          }}
-        />
-      </Tab.Navigator> */}
-        {/* <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#010101" translucent = {true}/> */}
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            // headerTitleAlign:'center'
-          }}
-        >
-          {/* <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} /> */}
-          <Stack.Screen name="MainScreen" component={Main} />
-          {/* <Stack.Screen name="Cart" component={Cart}
-            options={{
-              headerTitleStyle: {
-                fontSize: 26,
-                color: COLOURS.black,
-                fontWeight: 'bold',
-              },
-              headerTitle: 'Chi tiết hàng',
-              headerStyle: {
-                backgroundColor: "white",
-              },
-              headerTintColor: '#000',
-            }}
-          /> */}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <Profile />
+    // <Provider store={store}>
+    //   <NavigationContainer>
+    //     {/* <Tab.Navigator
+    //   screenOptions={{
+    //     headerShown:false
+    //   }}
+    //   >
+    //     <Tab.Screen name="HomeScreen" component={HomeNavigatorScreen} 
+    //     options={{
+    //       tabBarLabel: 'Home',
+    //       tabBarIcon: ({ color, size }) => (
+    //         <Ionicons name="home" color={color} size={size} />
+    //       ),
+    //     }}
+    //     />
+    //     <Tab.Screen name="CartScreen" component={Cart} initialRouteName='Cart'
+    //       options={{
+    //         headerShown:true,
+    //         tabBarLabel: 'Cart',
+    //         tabBarIcon: ({ color,size }) => (
+    //         <Ionicons name="cart" color={color} size={size} />
+    //       ),
+    //       }}
+    //     />
+    //   </Tab.Navigator> */}
+    //   <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#010101" translucent = {true}/>
+    //     <Stack.Navigator
+    //       screenOptions={{
+    //         headerShown: false,
+    //         // headerTitleAlign:'center'
+    //       }}
+    //     >
+    //       {/* <Stack.Screen name="Login" component={Login} />
+    //       <Stack.Screen name="Register" component={Register} /> */}
+    //       <Stack.Screen name="MainScreen" component={Main} />
+    //       {/* <Stack.Screen name="Cart" component={Cart}
+    //         options={{
+    //           headerTitleStyle: {
+    //             fontSize: 26,
+    //             color: COLOURS.black,
+    //             fontWeight: 'bold',
+    //           },
+    //           headerTitle: 'Chi tiết hàng',
+    //           headerStyle: {
+    //             backgroundColor: "white",
+    //           },
+    //           headerTintColor: '#000',
+    //         }}
+    //       /> */}
+    //     </Stack.Navigator>
+    //   </NavigationContainer>
+    // </Provider>
   );
 }
 

@@ -26,12 +26,12 @@ const AllBooks = ({ navigation }) => {
   let isSuccess = useSelector((state) => state.book.isSuccess)
   useEffect(() => {
     dispatch(fetchAllBooks())
-    if(isSuccess==true){
-        dispatch(fetchAllBooks())
-    }
-    if(isSuccess==false && books.length==0){
-      dispatch(fetchAllBooks())
-    }
+    // if(isSuccess==true){
+    //     dispatch(fetchAllBooks())
+    // }
+    // if(isSuccess==false && books.length==0){
+    //   dispatch(fetchAllBooks())
+    // }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
     dispatch(fetchSearchBook(key))
