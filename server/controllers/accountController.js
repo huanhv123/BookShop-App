@@ -36,11 +36,15 @@ const accountController={
             .where("user", "==", req.body.user).get()
             .then((temp) => {
               temp.forEach( (element) => {
-                return(user= element.data())
+                return(user= {id:element.id,...element.data()})
               });
             });
             if(user.user== req.body.user && user.password==  req.body.password){
-                res.status(200).json({mse:true})
+                res.status(200).json({
+                    mse:true,
+                    Type:user.Type,
+                    id:user.id
+                })
             }else{
                 res.status(200).json({mse:false})
             }
@@ -56,7 +60,22 @@ const accountController={
                 "user": req.body.user,
             } 
             await db.collection("accounts").add(newAccount);
-            res.status(200).json({mse:true})
+            await db.collection("accounts")
+            .where('user', '==', req.body.user).get()
+            .then((res) => {
+                res.forEach(async (element) => {                 
+                     let newCus = {
+                        "BoD":  "",
+                        "adderss":  "",
+                        "idAccount":  element.id,
+                        "nameCus" : "",
+                        "phoneCus": "",
+                        "sexCus": ""
+                      }
+                    await db.collection("customers").add(newCus);
+                    res.status(200).json({mse:true})
+                });
+            });
         }catch(err){
             res.status(500).json({mse:false});
         }
@@ -64,19 +83,11 @@ const accountController={
     UpdateAccount: async (req, res) => {
         try {
             let newAccount={
-                "Type":"customer",
+                "Type":req.body.Type,
                 "password": req.body.password,
                 "user": req.body.user,
               }
             await db.collection("accounts").doc(req.params.id).update(newAccount);
-            res.status(200).json({mse:true})
-        } catch (err) {
-            res.status(500).json({mse:false});
-        }
-    },
-    DeleteAccount: async (req, res) => {
-        try {
-            await db.collection("accounts").doc(req.params.id).delete();
             res.status(200).json({mse:true})
         } catch (err) {
             res.status(500).json({mse:false});

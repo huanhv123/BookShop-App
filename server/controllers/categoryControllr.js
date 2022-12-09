@@ -54,11 +54,10 @@ const categoryControllr={
     },
     CreateCategory: async (req, res) => {
         try {
-            let newBook = {
+            let newCategory = {
                 "nameCate": req.body.nameCate,
               }
-            //   console.log(newBook)
-            await db.collection("categories").add(newBook);
+            await db.collection("categories").add(newCategory);
             res.status(200).json({mse:true})
         } catch (err) {
             res.status(500).json({mse:false});
@@ -66,10 +65,11 @@ const categoryControllr={
     },
     UpdateCategory: async (req, res) => {
         try {
-            let newBook={
+            let newCategory={
                 "nameCate": req.body.nameCate,
               }
-            await db.collection("categories").doc(req.params.id).update(newBook);
+            await db.collection("categories").doc(req.params.id)
+            .update(newCategory);
             res.status(200).json({mse:true})
         } catch (err) {
             res.status(500).json({mse:false});
@@ -77,8 +77,18 @@ const categoryControllr={
     },
     DeleteCategory: async (req, res) => {
         try {
+            await db.collection("books")
+                .where('idCate', '==', req.params.id).get()
+                .then((res) => {
+                    res.forEach(async (element) => {
+                        let newBook = {
+                            "idCate": null,
+                        }
+                        await db.collection("books").doc(element.id).update(newBook);
+                    });
+                });
             await db.collection("categories").doc(req.params.id).delete();
-            res.status(200).json({mse:true})
+            res.status(200).json({ mse: true })
         } catch (err) {
             res.status(500).json({mse:false});
         }
