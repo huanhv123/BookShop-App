@@ -26,12 +26,12 @@ const AllBooks = ({ navigation }) => {
   let isSuccess = useSelector((state) => state.book.isSuccess)
   useEffect(() => {
     dispatch(fetchAllBooks())
-    if(isSuccess==true){
-        dispatch(fetchAllBooks())
-    }
-    if(isSuccess==false && books.length==0){
-      dispatch(fetchAllBooks())
-    }
+    // if(isSuccess==true){
+    //     dispatch(fetchAllBooks())
+    // }
+    // if(isSuccess==false && books.length==0){
+    //   dispatch(fetchAllBooks())
+    // }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
     dispatch(fetchSearchBook(key))
@@ -77,7 +77,7 @@ const AllBooks = ({ navigation }) => {
       </View>
       <ScrollView>
         {books != null ? (
-books.map((item)=>
+                books.map((item)=>
              (
               <Card key={item.id} style={styles.item}>
                 <View style={styles.rowView}>
@@ -92,8 +92,9 @@ books.map((item)=>
                           book: {
                             id: item.id,
                             nameBook: item.nameBook,
-                            // category: action.payload.category,
+                            
                             author: item.author,
+                            category: item.category,
                             price: item.price,
                             descriptionBook: item.descriptionBook,
                             photoBook: item.photoBook,

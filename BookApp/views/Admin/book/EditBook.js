@@ -13,6 +13,8 @@ const EditBook = ({route, navigation }) => {
   const [id, setId] = useState(book.id)
   const [nameBook, setNameBook] = useState(book.nameBook)
   const [author, setAuthor] = useState(book.author)
+  const [category, setCategory] = useState(book.category)
+  // const [category, setCategory] = useState(book.category)
   const [price, setPrice] = useState((book.price+""))
   const [descriptionBook, setDescriptionBook] = useState(book.descriptionBook)
   const [photoBook, setPhotoBook] = useState(book.photoBook)
@@ -21,6 +23,8 @@ const EditBook = ({route, navigation }) => {
       id:id,
       nameBook: nameBook,
       author:author,
+      category: category,
+      // category: category,
       price: parseInt(price),
       descriptionBook:descriptionBook,
       photoBook: photoBook,
@@ -129,10 +133,10 @@ const EditBook = ({route, navigation }) => {
             onChangeText={(author)=>setAuthor(author)} value={author}
           />
         </View>
-        {/* <View style={styles.inputContainer}>
-          <TextInput placeholder="Image" style={styles.inputText}
-          onChangeText={(photoBook)=>setPhotoBook(photoBook)} />
-        </View> */}
+        <View style={styles.inputContainer}>
+          <TextInput placeholder="Category" style={styles.inputText}
+          onChangeText={(category)=>setCategory(category)}  value={category}/>
+        </View>
 
         {/* <View style={styles.inputContainer}>
           <TextInput placeholder="Category" style={styles.inputText} />

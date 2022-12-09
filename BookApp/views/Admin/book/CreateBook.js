@@ -13,6 +13,7 @@ const CreateBook = ({ navigation }) => {
 
   const [nameBook, setNameBook] = useState("")
   const [author, setAuthor] = useState("")
+  const [category, setCategory] = useState("")
   const [price, setPrice] = useState(0)
   const [descriptionBook, setDescriptionBook] = useState("")
   const [photoBook, setPhotoBook] = useState("https://firebasestorage.googleapis.com/v0/b/bookshop-7d314.appspot.com/o/images%2FLamBanVoiBauTroi.jpg?alt=media&token=44dec27d-e84a-4a3a-8f9c-9191172f1975")
@@ -21,6 +22,7 @@ const CreateBook = ({ navigation }) => {
     let newBook={
       nameBook: nameBook,
       author:author,
+      category: category,
       price: parseInt(price),
       descriptionBook:descriptionBook,
       photoBook:photoBook,
@@ -138,10 +140,10 @@ const uploadBase64 = async (base64code) => {
             onChangeText={(author)=>setAuthor(author)}
           />
         </View>
-        {/* <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
           <TextInput placeholder="Image" style={styles.inputText}
-          onChangeText={(photoBook)=>setPhotoBook(photoBook)} />
-        </View> */}
+          onChangeText={(category)=>setCategory(category)} />
+        </View>
 
         {/* <View style={styles.inputContainer}>
           <TextInput placeholder="Category" style={styles.inputText} />
