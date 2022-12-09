@@ -1,123 +1,96 @@
 const { db } =require("../config/admin");
-const bcrypt=require("bcrypt");
 const accountController={
-    getAllUsers:async(req,res)=>{
-        try{
-            let resul = await (
-            await db.collection("user").get()
-            ).docs.map( (value) => {
-            temp=value.data();
-            return temp;
-            });
-            // console.log(resul['username'])
-            res.send(resul);
-            // tạo secrect key
-            // const key=  require('crypto').randomBytes(64).toString('hex');
-            // console.log("secrect key",key)
-        }catch(err){
+    getAllAccounts:async(req,res)=>{
+        try {
+            db.collection("accounts").get().then((snapshot) => {
+                const data = snapshot.docs.map((value) => (
+                  {
+                    id: value.id,
+                    ...value.data(),
+                  }
+                ));
+                res.status(200).json(data);
+            })
+        } catch (err) {
             res.status(500).json(err);
         }
     },
-    createUser:async(req,res)=>{
-        try{
-            // const salt =await bcrypt.genSalt(10);
-            // const hashed =await bcrypt.hash(req.body.password, salt);
-            // await firestore.db.collection("user").add({
-            //     "email": req.body.email,
-            //     "username": req.body.username,
-            //     "password": hashed,
-            //     "roles":'viewer'
-            // });
-            // res.send("Thêm mới user")
-            let user={
-                "username": req.body.username,
-                 "password": req.body.password,
-            } 
-
-            res.json(user);
-        }catch(err){
+    GetAccount: async (req, res) => {
+        try {
+            db.collection("accounts").doc(req.params.id).get().
+                then((value) => {
+                    let data = {
+                        id: value.id,
+                        ...value.data(),
+                    }
+                    res.status(200).json(data);
+                });
+        } catch (err) {
             res.status(500).json(err);
         }
     },
-    deleteUser:async(req,res)=>{
-        try{
-            await db.collection("user")
-            .where("username", "==", req.body.username).get()
-            .then((user) => {
-              user.forEach(async (element) => {
-                await db.collection("user").doc(element.id).delete();
-                res.send("Xóa user")
-              });
-            });
-        }catch(err){
-            res.status(500).json(err);
-        }
-    },
-    registerUser:async(req,res)=>{
-        try{
-            const salt =await bcrypt.genSalt(10);
-            const hashed =await bcrypt.hash(req.body.password, salt);
-            let resul = await db.collection("user").add({
-                email: req.body.email,
-                username: req.body.username,
-                password: hashed,
-                "roles":'viewer'
-            });
-            res.send(resul);
-        }catch(err){
-            res.status(500).json(err);
-        }
-    },
-    loginUser:async(req,res)=>{
+    loginAccount:async(req,res)=>{
         try{
             let user;
-            await db.collection("user")
-            .where("username", "==", req.body.username).get()
+            await db.collection("accounts")
+            .where("user", "==", req.body.user).get()
             .then((temp) => {
               temp.forEach( (element) => {
-                return(user= element.data())
+                return(user= {id:element.id,...element.data()})
               });
             });
-            if(!user){
-                return res.status(404).json("Sai username");
-            }
-            const validPassword = await bcrypt.compare(
-                req.body.password,
-                user.password
-            );
-            if(!validPassword){
-                return res.status(404).json("Sai password!");
-            }
-            if(user && validPassword){
-                let pages;
-                await db.collection("roles")
-                .where("name", "==", user.roles).get()
-                .then((user) => {
-                user.forEach(async (element) => {
-                    pages=element.data().pages
-                    });
-                });
-                user.roles=pages
-                // console.log(pages)
-                // console.log(temp.roles)
-                const accessToken= authController.generateAccessToken(user);
-                // res.status(200).json(accessToken);
-                const refreshToken= authController.generateRefreshToken(user);
-                // refreshTokens.push(refreshToken);
-                // //REX STORE ->ACCESSTOKEN
-                // //HTTPONLY COOKIE ->REFRESHTOKEN
-                // res.cookie("refreshToken",refreshToken,{
-                //     httpOnly:true,
-                //     secure:false,
-                //     path:"/",
-                //     sameSite:"strict",
-                // })
-                // const{password,...others}=user;
-                // res.status(200).json({...others,accessToken});
-                res.status(200).json({accessToken,refreshToken});
+            if(user.user== req.body.user && user.password==  req.body.password){
+                res.status(200).json({
+                    mse:true,
+                    Type:user.Type,
+                    id:user.id
+                })
+            }else{
+                res.status(200).json({mse:false})
             }
         }catch(err){
-            res.status(500).json(err);
+            res.status(500).json({mse:false});
+        }
+    },
+    createAccount:async(req,res)=>{
+        try{
+            let newAccount={
+                "Type":"customer",
+                "password": req.body.password,
+                "user": req.body.user,
+            } 
+            await db.collection("accounts").add(newAccount);
+            await db.collection("accounts")
+            .where('user', '==', req.body.user).get()
+            .then((res) => {
+                res.forEach(async (element) => {                 
+                     let newCus = {
+                        "BoD":  "",
+                        "adderss":  "",
+                        "idAccount":  element.id,
+                        "nameCus" : "",
+                        "phoneCus": "",
+                        "sexCus": ""
+                      }
+                    await db.collection("customers").add(newCus);
+                    res.status(200).json({mse:true})
+                });
+            });
+        }catch(err){
+            res.status(500).json({mse:false});
+        }
+    },
+    UpdateAccount: async (req, res) => {
+        try {
+            let newAccount={
+                "Type":req.body.Type,
+                "password": req.body.password,
+                "user": req.body.user,
+              }
+            await db.collection("accounts").doc(req.params.id).update(newAccount);
+            res.status(200).json({mse:true})
+        } catch (err) {
+            res.status(500).json({mse:false});
         }
     },
 }
