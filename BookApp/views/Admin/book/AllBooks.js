@@ -74,7 +74,7 @@ const AllBooks = ({ navigation }) => {
       </View>
       <ScrollView>
         {books != null ? (
-books.map((item)=>
+                books.map((item)=>
              (
               <Card key={item.id} style={styles.item}>
                 <View style={styles.rowView}>
@@ -89,8 +89,9 @@ books.map((item)=>
                           book: {
                             id: item.id,
                             nameBook: item.nameBook,
-                            // category: action.payload.category,
+                            
                             author: item.author,
+                            category: item.category,
                             price: item.price,
                             descriptionBook: item.descriptionBook,
                             photoBook: item.photoBook,
