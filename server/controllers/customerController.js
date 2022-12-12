@@ -29,20 +29,19 @@ const customerController={
             res.status(500).json(err);
         }
     },
-    CreateCustomer: async (req, res) => {
+    GetCustomersByAccount: async (req, res) => {
         try {
-            let newCus = {
-                "BoD":  req.body.BoD,
-                "adderss":  req.body.adderss,
-                "idAccount":  req.body.idAccount,
-                "nameCus" : req.body.nameCus,
-                "phoneCus": req.body.phoneCus,
-                "sexCus": req.body.sexCus
-              }
-            await db.collection("customers").add(newCus);
-            res.status(200).json({mse:true})
+            let account 
+            await db.collection("customers")
+                .where('idAccount', '==', req.params.id).get()
+                .then((res) => {
+                    res.forEach((element) => {
+                        return(account= {id:element.id,...element.data()})
+                    });
+                });
+            res.status(200).json(account);
         } catch (err) {
-            res.status(500).json({mse:false});
+            res.status(500).json(err);
         }
     },
     UpdateCustomer: async (req, res) => {
@@ -50,7 +49,6 @@ const customerController={
             let newCus = {
                 "BoD":  req.body.BoD,
                 "adderss":  req.body.adderss,
-                "idAccount":  req.body.idAccount,
                 "nameCus" : req.body.nameCus,
                 "phoneCus": req.body.phoneCus,
                 "sexCus": req.body.sexCus
@@ -61,13 +59,5 @@ const customerController={
             res.status(500).json({mse:false});
         }
     },
-    DeleteCustomer: async (req, res) => {
-        try {
-            await db.collection("customers").doc(req.params.id).delete();
-            res.status(200).json({mse:true})
-        } catch (err) {
-            res.status(500).json({mse:false});
-        }
-    }
 }
 module.exports=customerController;

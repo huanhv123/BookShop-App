@@ -44,7 +44,6 @@ const bookController = {
     },
     SearchBooks: async (req, res) => {
         try {
-
             // db.collection("books")
             // .orderBy('nameBook')
             // .startAt("Xa")
@@ -56,7 +55,6 @@ const bookController = {
             //     console.log(doc.id, " => ", doc.data());
             //     // console.log(element.data())
             //     // temp=[...temp,element.data()];
-
             //   });
             // });
             db.collection("books").get().then((snapshot) => {
@@ -103,7 +101,6 @@ const bookController = {
             let newBook = {
                 "nameBook": req.body.nameBook,
                 "author": req.body.author,
-                "price": req.body.price,
                 "descriptionBook": req.body.descriptionBook,
                 "photoBook": req.body.photoBook,
                 "idCate":req.body.idCate,
@@ -125,7 +122,6 @@ const bookController = {
             let newBook={
                 "nameBook": req.body.nameBook,
                 "author": req.body.author,
-                "price": req.body.price,
                 "descriptionBook": req.body.descriptionBook,
                 "photoBook": req.body.photoBook,
                 "idCate":req.body.idCate,
@@ -135,8 +131,6 @@ const bookController = {
                 "releaseDate":req.body.releaseDate,
                 "view":req.body.view
               }
-            //   console.log(newBook)
-            //   console.log(req.params.id)
             await db.collection("books").doc(req.params.id).update(newBook);
             res.status(200).json({mse:true})
         } catch (err) {

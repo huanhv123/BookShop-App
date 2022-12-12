@@ -13,7 +13,8 @@ const billController={
                         "status": value.data().status,
                         "phoneCus": value.data().phoneCus,
                         "nameCus": value.data().nameCus,
-                        "datePayment":  new Date(value.data().datePayment._seconds*1000).toLocaleString().replace(',',''),
+                        "datePayment":  new Date(value.data().
+                        datePayment._seconds*1000).toLocaleString().replace(',',''),
                         "idCus":  value.data().idCus
                     }
                 )
@@ -25,6 +26,7 @@ const billController={
         }
     },
     // [
+
     //     {
     //         "id": "AOYC1r6W7Dptn8VeEFhH",
     //         "address": "dfdasgfa",
@@ -62,32 +64,72 @@ const billController={
 // dateFormat = new Date(unixTimeZero).toLocaleString().replace(',','');
 
 // console.log(dateFormat);
+
+// try {
+//     // 12/7/2022
+//     // 12-7/2022
+//     // 2022-12-7
+//     let start = new Date(req.body.startDate);
+//     let end = new Date(req.body.endDate);
+//     db.collection("bills")
+//     .where('datePayment', '>=', start)
+//     .where('datePayment', '<=', end)
+//     .get().then((snapshot) => {
+//             const data = snapshot.docs.map((value) => (
+//                 {
+//                     id: value.id,
+//                     "address": value.data().address,
+//                     "total": value.data().total,
+//                     "products": value.data().products,
+//                     "status": value.data().status,
+//                     "phoneCus": value.data().phoneCus,
+//                     "nameCus": value.data().nameCus,
+//                     "datePayment":  new Date(value.data().datePayment._seconds*1000).toLocaleString().replace(',',''),
+//                     "idCus":  value.data().idCus
+//                 }
+//             ));
+//             res.status(200).json(data);
+//             });
+// } catch (err) {
+//     res.status(500).json(err);
+// }
     SearchBill: async (req, res) => {
         try {
-            // 12/7/2022
-            // 12-7/2022
-            // 2022-12-7
-            let start = new Date(req.body.startDate);
-            let end = new Date(req.body.endDate);
-            db.collection("bills")
-            .where('datePayment', '>=', start)
-            .where('datePayment', '<=', end)
-            .get().then((snapshot) => {
-                    const data = snapshot.docs.map((value) => (
-                        {
-                            id: value.id,
-                            "address": value.data().address,
-                            "total": value.data().total,
-                            "products": value.data().products,
-                            "status": value.data().status,
-                            "phoneCus": value.data().phoneCus,
-                            "nameCus": value.data().nameCus,
-                            "datePayment":  new Date(value.data().datePayment._seconds*1000).toLocaleString().replace(',',''),
-                            "idCus":  value.data().idCus
-                        }
-                    ));
-                    res.status(200).json(data);
+            db.collection("customers").get().then((snapshot) => {
+                const data = snapshot.docs.map((value) => (
+                    {
+                        id: value.id,
+                        ...value.data(),
+                    }
+                ));
+                let text = req.params.keyword
+                const newData = data.filter((item) => {
+                    const itemData = item.nameCus
+                        ? item.nameCus.toLowerCase()
+                        : ''.toLowerCase();
+                    const textData = text.toLowerCase();
+                    return itemData.indexOf(textData) > -1;
+                });
+                res.status(200).json(newData);
+            })
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    GetALLBillsByCus: async (req, res) => {
+        try {
+            let temp = [];
+            await db.collection("bills")
+                .where('idCus', '==', req.params.idCus).get()
+                .then((res) => {
+                    res.forEach((element) => {
+                        temp.push({
+                            id: element.id,
+                            ...element.data(),
+                        });
                     });
+                });
+            res.status(200).json(temp);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -115,7 +157,7 @@ const billController={
     },
     CreateBill: async (req, res) => {
         try {
-            let newBook = {
+            let newBill = {
                 "address": req.body.address,
                 "total": req.body.total,
                 "products": req.body.products,
@@ -125,8 +167,7 @@ const billController={
                 "datePayment": new Date(),
                 "idCus":  req.body.idCus
             }
-            //   console.log(newBook)
-            await db.collection("bills").add(newBook);
+            await db.collection("bills").add(newBill);
             res.status(200).json({ mse: true })
         } catch (err) {
             res.status(500).json({ mse: false });
@@ -134,11 +175,11 @@ const billController={
     },
     UpdateBill: async (req, res) => {
         try {
-            let newBook={
+            let newBill={
                 "status":req.body.status,
               }
-            // await db.collection("bills").doc(req.params.id).update(newBook);
-            res.status(200).json({mse:new Date(1670355647000).toLocaleString().replace(',','')})
+            await db.collection("bills").doc(req.params.id).update(newBill);
+            res.status(200).json({ mse: true })
         } catch (err) {
             res.status(500).json({mse:false});
         }
