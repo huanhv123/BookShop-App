@@ -14,13 +14,13 @@ const Register = ({ navigation }) => {
   return (
     <View style={styles.loginContainer}>
             <ImageBackground 
-                source={{uri: require('../assets/images/background.png')}}
+                // source={{uri: 'https://media.istockphoto.com/vectors/hitech-circuit-style-round-yggdrasil-tree-cyberpunk-futuristic-design-vector-id951268172'}}
                 resizeMode='cover'
                 style={styles.bgContainer}
 
             >
                 <View style={styles.logoLogin}>
-                    <Ionicons name='person' color='#FFF' size={36}/>
+                <Image style={styles.logoImg} source={require('../assets/images/logo-book-shop.jpg')}/>
                 </View>
                 <Text style={styles.signinText}>    
                     Đăng ký
@@ -29,7 +29,9 @@ const Register = ({ navigation }) => {
                     <View style={styles.inputContainer}>
                         <TextInput placeholder='Username' style={styles.inputText}/>
                     </View>
-                    
+                    <View style={styles.inputContainer}>
+                        <TextInput placeholder='Email' style={styles.inputText}/>
+                    </View>
                     <View style={styles.inputContainer}>
                         <TextInput placeholder='Mật khẩu' style={styles.inputText}/>
                     </View>
@@ -51,12 +53,13 @@ export default Register;
 const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
+    backgroundColor: '#EEEEEE',
 },
 logoLogin: {
-    width: 60,
-    height: 60,
-    borderRadius: 60/2,
-    backgroundColor: '#d81b60',
+    width: 100,
+    height: 100,
+    borderRadius: 100/2,
+    // backgroundColor: '#d81b60',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
@@ -67,7 +70,7 @@ signinText: {
     fontWeight: 'bold',
     textTransform: 'uppercase',
     marginTop: 10,
-    color: '#FFF',
+    color: '#000',
 
 },
 formContainer: {
@@ -83,8 +86,9 @@ inputContainer: {
     borderRadius: 10,
 },
 inputText: {
-    borderBottomWidth: 3,
+    // borderBottomWidth: 3,
     // borderBottomColor: '#d81b60',
+    border: 'solid',
     paddingVertical:10,
     color: '#000',
     borderRadius: 10,
@@ -105,11 +109,21 @@ btnTxt: {
 bgContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
 },
 txtForgot : {
     marginTop: 20,
     marginLeft: 100,
     color: 'white',
     fontStyle: 'Underline'
-}
+},
+logoImg: {
+    width: 100,
+    height: 100,
+    borderRadius: 100/2,
+    backgroundColor: '#d81b60',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginTop: 40,
+},
 });
