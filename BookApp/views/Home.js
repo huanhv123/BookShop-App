@@ -84,7 +84,7 @@ const Home = ({ navigation }) => {
          data={items}
          renderItem={ItemBox}
       />
-      {/* <View
+      <View
         style={{
           flexDirection: 'row',
           flexWrap: 'wrap',
@@ -135,7 +135,7 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           ))
         }
-      </View> */}
+      </View> 
 
     </View>
   )

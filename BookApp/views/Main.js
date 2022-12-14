@@ -18,6 +18,7 @@ import AllBills from './Admin/bill/AllBills';
 import EditBill from './Admin/bill/EditBill';
 import Statistical from './Admin/Statistical'
 import EditProfile from './Customer/EditProfile'
+import Pay from './Customer/Pay'
 
 const CustomerNavigatorScreen = () => {
     const CustomerNavigator = createDrawerNavigator();
@@ -47,7 +48,7 @@ const CustomerNavigatorScreen = () => {
             //         headerShown: false
             //     }} 
                 />
-            {/* <CustomerNavigator.Screen name="HistoryBill" component={HistoryBill} /> */}
+            <CustomerNavigator.Screen name="Pay" component={Pay} />
         </CustomerNavigator.Navigator>
     );
 }

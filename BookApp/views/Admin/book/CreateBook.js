@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity,Image,Platform } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
-import {firebase} from '../../../config/firebase';
+import { firebase } from '../../../config/firebase';
 import { getStorage, uploadString, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
 import { async } from '@firebase/util';
-import { fetchAllBooks,fetchCreateBooks } from "../../../redux/actions/bookAction";
+import { fetchAllBooks, fetchCreateBooks } from "../../../redux/actions/bookAction";
 
 const CreateBook = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -19,13 +19,13 @@ const CreateBook = ({ navigation }) => {
   const [photoBook, setPhotoBook] = useState("https://firebasestorage.googleapis.com/v0/b/bookshop-7d314.appspot.com/o/images%2FLamBanVoiBauTroi.jpg?alt=media&token=44dec27d-e84a-4a3a-8f9c-9191172f1975")
 
   const handleAddBook = () => {
-    let newBook={
+    let newBook = {
       nameBook: nameBook,
-      author:author,
+      author: author,
       category: category,
       price: parseInt(price),
-      descriptionBook:descriptionBook,
-      photoBook:photoBook,
+      descriptionBook: descriptionBook,
+      photoBook: photoBook,
     }
     // Bàn Về Văn Minh
     // Fukuzawa Yukichi
@@ -42,84 +42,77 @@ const CreateBook = ({ navigation }) => {
   const openImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({ base64: true })
     if (result.canceled)
-        return;
+      return;
     // console.log(result)
     let uri = result.assets[0].uri;
     setSelectedImage({ localUri: result.assets[0].uri })
     if (Platform.OS === 'web') {
-        let base64code = result.assets[0].base64;
-        //upload 
-        await uploadBase64(base64code)
-    } else { 
+      let base64code = result.assets[0].base64;
+      //upload 
+      await uploadBase64(base64code)
+    } else {
       let uri = result.assets[0].uri;
       const blobfile = await convertURI2BlobFile(uri)
       // console.log(blobfile)
       await uploadfile(blobfile);
     }
-}
-const convertURI2BlobFile = async (uri) => {
-  const result = await new Promise( (resolve, reject) => {
+  }
+  const convertURI2BlobFile = async (uri) => {
+    const result = await new Promise((resolve, reject) => {
       let xmlRequest = new XMLHttpRequest();
-      xmlRequest.onload = function() {
-         resolve( xmlRequest.response);
+      xmlRequest.onload = function () {
+        resolve(xmlRequest.response);
 
       }
-      xmlRequest.onerror = function(){
-          console.log("error here")
+      xmlRequest.onerror = function () {
+        console.log("error here")
       }
 
-      xmlRequest.responseType="blob";
+      xmlRequest.responseType = "blob";
       xmlRequest.open("GET", uri, true);
       xmlRequest.send(null)
-  })
-  return result;
-}
-
-const uploadfile = async (blobfile) => {
-  let imgname = 'img-android-' + new Date().getTime();
-  let storage = getStorage();
-  let storageRef = ref(storage, `images/${imgname}.jpg`);
-  let metadata = {
-      contentType: 'image/jpeg'
+    })
+    return result;
   }
-  const uploadTask = uploadBytesResumable(storageRef, blobfile, metadata)
-  uploadTask.on('state_changed',
+
+  const uploadfile = async (blobfile) => {
+    let imgname = 'img-android-' + new Date().getTime();
+    let storage = getStorage();
+    let storageRef = ref(storage, `images/${imgname}.jpg`);
+    let metadata = {
+      contentType: 'image/jpeg'
+    }
+    const uploadTask = uploadBytesResumable(storageRef, blobfile, metadata)
+    uploadTask.on('state_changed',
       (snapshot) => { },
-      (error) => {},
+      (error) => { },
       () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log('downloadURL', downloadURL)
-              setPhotoBook(downloadURL)
-          }
-          )
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('downloadURL', downloadURL)
+          setPhotoBook(downloadURL)
+        }
+        )
       }
-  )
-}
-const uploadBase64 = async (base64code) => {
+    )
+  }
+  const uploadBase64 = async (base64code) => {
     let imgname = 'im-web-' + new Date().getTime();
     //step 2
     let storage = getStorage();
     let storageRef = ref(storage, `images/${imgname}.jpg`);
     let metadata = {
-        contentType: 'image/jpeg'
+      contentType: 'image/jpeg'
     }
     uploadString(storageRef, base64code, 'base64', metadata)
-        .then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((downloadURL) => {
-                console.log('downloadURL', downloadURL)
-                setPhotoBook(downloadURL)
-            }
-            )
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          console.log('downloadURL', downloadURL)
+          setPhotoBook(downloadURL)
         }
-    )
-}
-
-
-
-
-
-
-
+        )
+      }
+      )
+  }
 
 
   return (
@@ -133,16 +126,16 @@ const uploadBase64 = async (base64code) => {
         </View> */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Name" style={styles.inputText}
-          onChangeText={(nameBook)=>setNameBook(nameBook)} />
+            onChangeText={(nameBook) => setNameBook(nameBook)} />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Author" style={styles.inputText} 
-            onChangeText={(author)=>setAuthor(author)}
+          <TextInput placeholder="Author" style={styles.inputText}
+            onChangeText={(author) => setAuthor(author)}
           />
         </View>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Image" style={styles.inputText}
-          onChangeText={(category)=>setCategory(category)} />
+            onChangeText={(category) => setCategory(category)} />
         </View>
 
         {/* <View style={styles.inputContainer}>
@@ -150,26 +143,28 @@ const uploadBase64 = async (base64code) => {
         </View> */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Description" style={styles.inputText}
-          onChangeText={(descriptionBook)=>setDescriptionBook(descriptionBook)} />
+            onChangeText={(descriptionBook) => setDescriptionBook(descriptionBook)} />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Price" style={styles.inputText} 
-            onChangeText={(price)=>setPrice(price)}
+          <TextInput placeholder="Price" style={styles.inputText}
+            onChangeText={(price) => setPrice(price)}
           />
         </View>
-        <View style={{...styles.inputContainer,justifyContent:'center',
-            alignItems:'center'}}>
-            <Image source={{ uri: selectedImage.localUri }}
-                style={styles.img} />
-            <TouchableOpacity style={styles.btn} onPress={openImage}>
-                <Text style={styles.btnTextx}>Chosse Image</Text>
-            </TouchableOpacity>
+        <View style={{
+          ...styles.inputContainer, justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Image source={{ uri: selectedImage.localUri }}
+            style={styles.img} />
+          <TouchableOpacity style={styles.btn} onPress={openImage}>
+            <Text style={styles.btnTextx}>Chosse Image</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={()=>handleAddBook()}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={() => handleAddBook()}>
             <Text style={styles.btnText}>Submit </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCancel} onPress={()=>handleCancel()}>
+          <TouchableOpacity style={styles.btnCancel} onPress={() => handleCancel()}>
             <Text style={styles.btnText}>Cancel </Text>
           </TouchableOpacity>
         </View>
@@ -227,7 +222,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "#FFF",
-    fontSize:20,
+    fontSize: 20,
   },
 
   btnContainer: {
@@ -242,22 +237,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   img: {
-    borderColor:"#000",
-    borderWidth:2.5,
+    borderColor: "#000",
+    borderWidth: 2.5,
     width: 150,
     height: 200,
     margin: 10,
   },
-  btn:{
-    width:'60%',
-    height:35,
-    backgroundColor:'blue',
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:30/2,
+  btn: {
+    width: '60%',
+    height: 35,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30 / 2,
   },
   btnTextx: {
     color: "#fff",
-    fontSize:20,
+    fontSize: 20,
   },
 })

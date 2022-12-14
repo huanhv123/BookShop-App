@@ -283,8 +283,7 @@ const Cart = ({ navigation }) => {
   );
 
   return (
-    <View
-      style={styles.container}>
+    <View style={styles.container}>
       {/* <View
         style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -361,7 +360,7 @@ const Cart = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             //  (total != 0 ? checkOut() : null)
-            checkOut()
+            navigation.navigate('Pay')
           }
           style={styles.paymentBtn}>
           <Text
