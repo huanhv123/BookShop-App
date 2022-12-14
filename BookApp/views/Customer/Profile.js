@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Alert, TouchableOpacity,Button } 
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Iconicon from 'react-native-vector-icons/Ionicons';
+import AntDesign from "react-native-vector-icons/AntDesign";
 import {
   Avatar,
   Title,
@@ -9,29 +10,11 @@ import {
 } from 'react-native-paper';
 
 
-// const showAlert = () =>{
-//   Alert.alert(
-//     "Hổ trợ",
-//     "SDT: 0987654321",
-//     "Email:shopbook@gmail.com",
-//     [
-//       {
-//         text: "Cancel",
-//         onPress: () => Alert.alert("Cancel Pressed"),
-//         style: "cancel",
-//       },
-//     ],
 
-//     {
-//       cancelable: true,
-//       onDismiss: () =>
-//         Alert.alert(
-//           "This alert was dismissed by tapping outside of the alert dialog."
-//         ),
-//     }
-//   );
-// }
 const Profile = ({ navigation }) => {
+  const handleCancel = () => {
+    navigation.goBack()
+  }
   return (
     <SafeAreaView style={styles.container}>
 
@@ -75,39 +58,45 @@ const Profile = ({ navigation }) => {
           borderRightWidth: 1
         }]}>
           <Title>₹140.50</Title>
-          <Caption>Wallet</Caption>
+          <Caption>Tổng tiền đã tiêu</Caption>
         </View>
         <View style={[styles.infoBox, {
           backgroundColor: '#ffffff',
         }]}>
           <Title>12</Title>
-          <Caption>Orders</Caption>
+          <Caption>Đơn hàng</Caption>
         </View>
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableOpacity onPress={() => { }}>
+        {/* <TouchableOpacity onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="heart-outline" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { }}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="credit-card" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Payment</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate("HistoryBill")}>
           <View style={styles.menuItem}>
             <Icon name="share-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>History Bill</Text>
+            <Text style={styles.menuItemText}>Lịch sử mua hàng</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+          <View style={styles.menuItem}>
+            <Iconicon name="ios-settings-sharp" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>Sửa thông tin cá nhân</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="account-check-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText} >Support</Text>
+            <Text style={styles.menuItemText} >Hỗ trợ</Text>
           </View>
           <View style={{ marginLeft: 15, backgroundColor: '#ffffff', }}>
             <Text style={styles.menuItemText}>SDT: 0987654321</Text>
@@ -115,10 +104,11 @@ const Profile = ({ navigation }) => {
           </View>
 
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+       
+        <TouchableOpacity onPress={() => handleCancel()}>
           <View style={styles.menuItem}>
-            <Iconicon name="ios-settings-sharp" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>EditProfile</Text>
+            <AntDesign name="logout" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>Log Out</Text>
           </View>
         </TouchableOpacity>
       </View>

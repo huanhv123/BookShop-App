@@ -19,19 +19,19 @@ const HistoryBill = () => {
         <ScrollView>
           <View style={styles.orderRow} >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Order id:</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Mã hóa đơn:</Text>
               <Text style={{ color: '#2ABB9C' }}>123456</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>OrderTime:</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Ngày đặt:</Text>
               <Text style={{ color: '#C21C70' }}>20/07/2022</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Status:</Text>
-              <Text style={{ color: '#2ABB9C' }}>Completed </Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
+              <Text style={{ color: '#2ABB9C' }}>Đã giao hàng </Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Total:</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng tiền:</Text>
               <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>80000</Text>
             </View>
           </View>
@@ -39,40 +39,40 @@ const HistoryBill = () => {
         <ScrollView>
           <View style={styles.orderRow} >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Order id:</Text>
-              <Text style={{ color: '#2ABB9C' }}>8984512</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Mã hóa đơn:</Text>
+              <Text style={{ color: '#2ABB9C' }}>18874</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>OrderTime:</Text>
-              <Text style={{ color: '#C21C70' }}>15/07/2022</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Ngày đặt:</Text>
+              <Text style={{ color: '#C21C70' }}>15/12/2022</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Status:</Text>
-              <Text style={{ color: '#2ABB9C' }}>Pending</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
+              <Text style={{ color: '#2ABB9C' }}>Chưa giao hàng </Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Total:</Text>
-              <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>183000</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng tiền:</Text>
+              <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>100000</Text>
             </View>
           </View>
         </ScrollView>
         <ScrollView>
           <View style={styles.orderRow} >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Order id:</Text>
-              <Text style={{ color: '#2ABB9C' }}>1878451</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Mã hóa đơn:</Text>
+              <Text style={{ color: '#2ABB9C' }}>213124</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>OrderTime:</Text>
-              <Text style={{ color: '#C21C70' }}>20/01/2022</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Ngày đặt:</Text>
+              <Text style={{ color: '#C21C70' }}>14/12/2022</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Status:</Text>
-              <Text style={{ color: '#2ABB9C' }}>Completed </Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
+              <Text style={{ color: '#2ABB9C' }}>Chưa giao hàng </Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Total:</Text>
-              <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>813000</Text>
+              <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng tiền:</Text>
+              <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>10000</Text>
             </View>
           </View>
         </ScrollView>
