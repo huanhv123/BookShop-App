@@ -179,10 +179,10 @@ const Main = () => {
                 options={{
                     headerShown: false
                 }} />
-            {/* <Main.Screen name='AdminSreen' component={AdminNavigatorScreen}
+            <Main.Screen name='AdminSreen' component={AdminNavigatorScreen}
                 options={{
                     headerShown: false
-                }} /> */}
+                }} />
         </Main.Navigator>
     );
 }
