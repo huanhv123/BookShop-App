@@ -22,6 +22,7 @@ const initialState ={
             status:"Chưa thanh toán",
         },
     ],
+    isSuccess:false,
 };
 export default (state = initialState, action) => {
     switch (action.type) {

@@ -4,10 +4,8 @@ export const fetchAllReviews=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-       
           const response=await fetch("");
           const reviews=await response.json();
-          // console.log(books)
           dispatch(GetAllReview(reviews))
       } catch (err) {
           console.error(err);
@@ -23,7 +21,6 @@ export const fetchSearchReviews=(key)=>{
       try {
           const response=await fetch(""+key);
           const reviews=await response.json();
-          // console.log(books)
           dispatch(SearchReview(reviews))
       } catch (err) {
           console.error(err);

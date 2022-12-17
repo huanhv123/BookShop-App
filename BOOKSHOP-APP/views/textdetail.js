@@ -3,7 +3,6 @@
 // import ReadMore from '@fawazahmed/react-native-read-more'
 
 
-
 // const DetailBook = ({navigation}) => {
 //   return (
 //     <View style={styles.container}>
@@ -167,4 +166,6 @@
 
 //   ,
 // })
+
+
 

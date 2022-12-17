@@ -110,7 +110,7 @@ const bookController = {
                 "releaseDate":req.body.releaseDate,
                 "view":req.body.view
               }
-            //   console.log(newBook)
+              console.log(newBook)
             await db.collection("books").add(newBook);
             res.status(200).json({mse:true})
         } catch (err) {
@@ -131,6 +131,7 @@ const bookController = {
                 "releaseDate":req.body.releaseDate,
                 "view":req.body.view
               }
+              console.log(req.body.nameBook)
             await db.collection("books").doc(req.params.id).update(newBook);
             res.status(200).json({mse:true})
         } catch (err) {
