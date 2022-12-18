@@ -95,7 +95,7 @@ const billController={
 // }
     SearchBill: async (req, res) => {
         try {
-            db.collection("customers").get().then((snapshot) => {
+            db.collection("bills").get().then((snapshot) => {
                 const data = snapshot.docs.map((value) => (
                     {
                         id: value.id,

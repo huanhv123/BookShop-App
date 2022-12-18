@@ -1,10 +1,10 @@
 import axios from "axios";
-  
+var ip="192.168.1.7"
 export const fetchAllBills=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://localhost:3000/Bill/getAllBills");
+          const response=await fetch("http://"+ip+":3000/bill/getAllBills");
           const bills=await response.json();
           // console.log(books)
           dispatch(GetAllBill(bills))
@@ -17,10 +17,11 @@ export const fetchAllBills=()=>{
 }
 
 export const fetchSearchBill=(key)=>{
+  console.log(key)
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch(""+key);
+          const response=await fetch("http://"+ip+":3000/bill/search"+key);
           const bills=await response.json();
           // console.log(books)
           dispatch(SearchBill(bills))

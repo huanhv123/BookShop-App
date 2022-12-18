@@ -32,13 +32,18 @@ const AllBills = ({ navigation }) => {
     // }
   }, [isSuccess]);
   const handleSeachBill = (key) => {
-    // dispatch(fetchSearchBill(key))
+    if(key.length  > 0){
+    dispatch(fetchSearchBill(key))
   }
-  const handleDeleteBill = (id) => {
-    // console.log(id)
-    // dispatch(fetchDeleteBills(id))
-    // dispatch(fetchAllBooks())
+  else  {
+    dispatch(fetchAllBills())
   }
+}
+  // const handleDeleteBill = (id) => {
+  //   // console.log(id)
+  //   // dispatch(fetchDeleteBills(id))
+  //   // dispatch(fetchAllBooks())
+  // }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -216,4 +221,3 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
-7

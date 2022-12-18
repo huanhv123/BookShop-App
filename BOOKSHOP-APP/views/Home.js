@@ -75,7 +75,7 @@ const Home = ({ navigation }) => {
   const width = Dimensions.get('window').width / 2.3;
   useEffect(() => {
     if(SECTIONS.length==0){
-      // dispatch(fetchBookHome())
+      dispatch(fetchBookHome())
     }
   }, []);
 
