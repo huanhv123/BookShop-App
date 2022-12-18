@@ -48,7 +48,7 @@ const CustomDrawer = props => {
             </DrawerContentScrollView>
             <TouchableOpacity onPress={() => props.navigation.navigate('Login')}
                 style={{ paddingVertical: 15, marginLeft: 17 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 310 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 280 }}>
                     <Ionicons name="exit-outline" size={30} />
                     <Text
                         style={{
