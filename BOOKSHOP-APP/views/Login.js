@@ -36,10 +36,10 @@ const Login = ({ navigation }) => {
                     <View style={styles.inputContainer2}>
                         <TextInput placeholder='   Mật khẩu' style={styles.inputText}/>
                     </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("MainScreen")}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("AdminNavigatorScreen")}>
                         <Text style={styles.btnTxt} >Đăng nhập</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate("MainScreen")}>
+                    <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate("AdminNavigatorScreen")}>
                         <Image style={styles.img} source={require('../assets/images/search.png')}/>
                         <Text style={styles.btnTxt} >GOOGLE</Text>
                     </TouchableOpacity>

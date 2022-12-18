@@ -4,7 +4,6 @@ export const fetchAllAddresss=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-
           const response=await fetch("");
           const address=await response.json();
          

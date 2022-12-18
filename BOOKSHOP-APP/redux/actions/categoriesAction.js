@@ -5,9 +5,13 @@ export const fetchAllCategories=()=>{
     const getData = async () => {
       try {
        
-          const response=await fetch("");
-          const categories=await response.json();
-          
+          // const response=await fetch("");
+          // const categories=await response.json();
+          const categories=[
+            {id:1,nameCate:"Khoa học"},
+            {id:2,nameCate:"Văn học"},
+            {id:3,nameCate:"Kinh tế"},
+        ]
           dispatch(GetAllCategory(categories))
       } catch (err) {
           console.error(err);

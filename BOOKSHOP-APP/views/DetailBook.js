@@ -7,17 +7,30 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
+  ToastAndroid
 } from 'react-native';
 import { COLOURS, Items } from '../data/Database';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReadMore from '@fawazahmed/react-native-read-more'
 import { Rating, AirbnbRating } from 'react-native-ratings';
 // {navigation, route}
 const DetailBook = ({navigation, route}) => {
-  const {productID} = route.params;
+  const {book} = route.params;
+//   const book=    {
+//     "id": "20yAMenArlRBTioCSAL3",
+//     "descriptionBook": "Một câu chuyện giản dị, chứa đầy bất ngờ cho tới trang cuối",
+//     "releaseDate": "1/9/2019",
+//     "photoBook": "https://firebasestorage.googleapis.com/v0/b/app-react-native-af9b3.appspot.com/o/images%2Fspy-x-family-tap-1.jpg?alt=media&token=6772ed49-3e84-4319-a1e0-0828353a6620",
+//     "oldPrice": 198100,
+//     "nameBook": "Làm Bạn Với Bầu Trời ( Bìa Cứng)",
+//     "newPrice": 120000,
+//     "view": 2143,
+//     "4": 20,
+//     "author": "Nguyễn Nhật Ánh"
+// }
   const [product, setProduct] = useState({});
   const [starCount, setStarCount] = useState(4);
   const [count, setCount] = useState(0);
@@ -35,55 +48,75 @@ const DetailBook = ({navigation, route}) => {
       'nameCus': 'GGGhssss'
     }
   ]
-  // var x = parseInt(product.productPrice);
-  // var x = 18900;
-  // x = x.toLocaleString('vi-VN');
+
+  const infoProduct = [
+    {
+      title:"Mã hàng:",
+      value: book.id,
+    },
+    {
+      title:"Tác giả:",
+      value: book.author,
+    },
+    {
+      title:"Ngày xuất bản:",
+      value: book.releaseDate,
+    },
+  ]
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height / 2;
 
   useEffect(() => {
-    getDataFromDB();
+    // getDataFromDB();
   }, []);
 
-  const getDataFromDB = async () => {
-    for (let index = 0; index < Items.length; index++) {
-      if (Items[index].id == 1) {
-        await setProduct(Items[index]);
-        return;
+  const addToCart = async (id) => {
+    let itemArray = await AsyncStorage.getItem('cartItems');
+    itemArray = JSON.parse(itemArray);
+    bookCart={
+      id:book.id,
+      photoBook:book.photoBook,
+      nameBook:book.nameBook,
+      price:book.newPrice,
+      quantityBuy:parseInt(count),
+  }
+    if (itemArray) {
+      let array = itemArray;
+      checkExitBook=true
+      array.forEach((item)=>{
+        if(item.id==book.id&&bookCart.quantityBuy>0){
+          item.quantityBuy=parseInt(count)
+          checkExitBook=false
+        }
+      })
+      if(checkExitBook){
+        array.push(bookCart);
+        checkExitBook=false;
+      }
+      try {
+        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+        ToastAndroid.show(
+          'Sản phẩm thêm vào giỏ hàng',
+          ToastAndroid.SHORT,
+        );
+        // navigation.navigate("Home");
+      } catch (error) {
+        return error;
+      }
+    } else {
+      let array = [];
+      array.push(bookCart);
+      try {
+        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+        ToastAndroid.show(
+          'Sản phẩm thêm vào giỏ hàng',
+          ToastAndroid.SHORT,
+        );
+        // navigation.goBack();
+      } catch (error) {
+        return error;
       }
     }
-  };
-
-  const addToCart = async id => {
-    // let itemArray = await AsyncStorage.getItem('cartItems');
-    // itemArray = JSON.parse(itemArray);
-    // if (itemArray) {
-    //   let array = itemArray;
-    //   array.push(id);
-    //   try {
-    //     await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-    //     ToastAndroid.show(
-    //       'Item Added Successfully to cart',
-    //       ToastAndroid.SHORT,
-    //     );
-    //     navigation.navigate("Home");
-    //   } catch (error) {
-    //     return error;
-    //   }
-    // } else {
-    //   let array = [];
-    //   array.push(id);
-    //   try {
-    //     await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-    //     ToastAndroid.show(
-    //       'Item Added Successfully to cart',
-    //       ToastAndroid.SHORT,
-    //     );
-    //     navigation.goBack();
-    //   } catch (error) {
-    //     return error;
-    //   }
-    // }
   };
 
   const onStarRatingPress = (rating) => {
@@ -163,7 +196,7 @@ const DetailBook = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
             <Image
-              source={require("../assets/image-book/ban-ve-van-minh.jpg")}
+              source={{uri: book.photoBook}}
               style={{
                 width: '100%',
                 height: '100%',
@@ -179,6 +212,8 @@ const DetailBook = ({navigation, route}) => {
             marginBottom: 15,
             backgroundColor: '#fff',
             width:'100%',
+            borderTopWidth:1,
+              borderColor:'gray',
           }}>
           <View
             style={{
@@ -220,7 +255,7 @@ const DetailBook = ({navigation, route}) => {
                 marginRight: 10,
               }}>
               {
-                parseInt(product.productPrice).toLocaleString('vi-VN')
+                parseInt(book.newPrice).toLocaleString('vi-VN')
               }&#8363;
             </Text>
             <Text
@@ -234,7 +269,7 @@ const DetailBook = ({navigation, route}) => {
               }}
             >
               {
-                (parseInt(product.productPrice) + 5000).toLocaleString('vi-VN')
+                (parseInt(book.oldPrice)).toLocaleString('vi-VN')
               }&#8363;
             </Text>
           </View>
@@ -271,8 +306,8 @@ const DetailBook = ({navigation, route}) => {
              
             </View> */}
           </View>
-
-          <View
+          {infoProduct.map((item)=>(
+          <View key={item.title}
             style={{
               flexDirection: 'column',
               marginVertical: 4,
@@ -309,7 +344,7 @@ const DetailBook = ({navigation, route}) => {
                     fontWeight: '600',
                     color: 'gray',
                   }}>
-                  Mã hàng:
+                  {item.title}
                 </Text>
               </View>
               <View
@@ -334,557 +369,21 @@ const DetailBook = ({navigation, route}) => {
                     // marginRight:10,
                   }}
                 >
-                  8154156515461
+                  {item.value}
                 </Text>
               </View>
             </View>
           </View>
-
+          ))}
           <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
+          style={{
+            paddingHorizontal: 16,
+            marginBottom: 15,
+            backgroundColor: '#fff'
+          }}
+          >
 
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
           </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              marginVertical: 4,
-              alignItems: 'center',
-              borderWidth: 2,
-              marginBottom: 14
-              // justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                width: "100%",
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottomColor: "#fff",
-                // padding:10,
-              }}>
-              <View
-                style={{
-                  width: "40%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRightWidth: 2,
-                  // backgroundColor:'red',
-                  padding: 6,
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: 'gray',
-                  }}>
-                  Mã hàng:
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: "60%",
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingLeft: 10
-                }}
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  allowFontScaling={false}
-                  accessible={true}
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '600',
-                    // maxWidth: '85%',
-                    // color: 'gray',
-                    // marginBottom: 4,
-                    // marginRight:10,
-                  }}
-                >
-                  8154156515461
-                </Text>
-              </View>
-            </View>
-          </View>
-
         </View>
 
         <View
@@ -1128,7 +627,7 @@ const DetailBook = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          onPress={() => (product.isAvailable ? addToCart(product.id) : null)}
+          onPress={() => addToCart()}
           style={{
             width: '50%',
             height: '90%',

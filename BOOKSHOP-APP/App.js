@@ -6,17 +6,20 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import Login from './views/Login';
 import Register from './views/Register';
-import Main from './views/Main';
+import {CustomerNavigatorScreen,AdminNavigatorScreen} from './views/Main';
 import 'react-native-gesture-handler';
 import DropdownComponent from './views/DropdownComponent';
 import Statistical from './views/Admin/Statistical';
+import Home from './views/Home';
+import DetailBook from './views/DetailBook';
+import Cart from './views/Customer/Cart';
 export default function App() {
   const Stack = createNativeStackNavigator();
-
   return (
+
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator
+       <Stack.Navigator
           screenOptions={{
             headerShown: false,
             // headerTitleAlign:'center'
@@ -24,11 +27,13 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="MainScreen" component={Main} />
+          <Stack.Screen name="CustomerNavigatorScreen" component={CustomerNavigatorScreen} />
+          <Stack.Screen name="AdminNavigatorScreen" component={AdminNavigatorScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      {/* <Cart/> */}
     </Provider> 
-    // <DropdownComponent/>
+
   );
 }
 

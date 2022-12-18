@@ -1,5 +1,5 @@
 import axios from "axios";
-  var ip="192.168.1.105"
+  var ip="localhost"
 export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -14,6 +14,21 @@ export const fetchAllBooks=()=>{
           const books=await response.json();
           // console.log(books)
           dispatch(GetAllBook(books))
+      } catch (err) {
+          console.error(err);
+      }
+  };
+  getData();
+  }
+}
+
+export const fetchBookHome=()=>{
+  return (dispatch)=>{
+    const getData = async () => {
+      try {
+          const response=await fetch("http://"+ip+":3000/book/GetAllBooksToHome");
+          const books=await response.json();
+          dispatch(GetBookHome(books))
       } catch (err) {
           console.error(err);
       }
@@ -89,6 +104,13 @@ export const fetchDeleteBooks=(id)=>{
   deleteData();
   }
 }
+
+export const GetBookHome = (books) => {
+  return {
+    type: 'GET_BOOK_HOME',
+    payload:books
+  };
+};
 
 export const GetAllBook = (books) => {
   return {

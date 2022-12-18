@@ -20,7 +20,7 @@ import Statistical from './Admin/Statistical'
 import EditProfile from './Customer/EditProfile'
 import Pay from './Customer/Pay'
 
-const CustomerNavigatorScreen = () => {
+ const CustomerNavigatorScreen = () => {
     const CustomerNavigator = createDrawerNavigator();
     return (
         <CustomerNavigator.Navigator
@@ -34,19 +34,19 @@ const CustomerNavigatorScreen = () => {
             />
             <CustomerNavigator.Screen name='Profile' component={Profile}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     title: 'Thông tin tài khoản'
                 }}
             />
             <CustomerNavigator.Screen name="Cart" component={Cart}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     title: 'Giỏ hàng'
                 }}
             />
             <CustomerNavigator.Screen name="Pay" component={Pay}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     title: 'Thanh toán'
                 }}
             />
@@ -74,12 +74,13 @@ const HomeNavigatorScreen = () => {
                 options={{
                     headerShown: false
                 }} />
-            <HomeNavigator.Screen name='EditProfile' component={EditProfile} />
+            <HomeNavigator.Screen name='ProfileHome' component={Profile} />
+            <HomeNavigator.Screen name='CartHome' component={Cart} />
         </HomeNavigator.Navigator>
     );
 }
 
-const AdminNavigatorScreen = () => {
+  const AdminNavigatorScreen = () => {
     const AdminNavigator = createDrawerNavigator();
     return (
         <AdminNavigator.Navigator
@@ -169,7 +170,6 @@ const ManagerCategoryScreen = () => {
     );
 }
 
-
 const Main = () => {
     const Main = createNativeStackNavigator();
     return (
@@ -187,6 +187,6 @@ const Main = () => {
     );
 }
 
-export default Main
+export {Main,CustomerNavigatorScreen,AdminNavigatorScreen} 
 
 const styles = StyleSheet.create({})
