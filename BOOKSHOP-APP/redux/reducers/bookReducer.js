@@ -31,6 +31,7 @@ const initialState = {
         }
     ],
     isSuccess:false,
+    booksHome:[]
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +40,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 books:[...action.payload],
+                isSuccess :false,
+            };
+        case 'GET_BOOK_HOME':
+            return {
+                ...state,
+                booksHome:[...action.payload],
                 isSuccess :false,
             };
         case 'SEARCH_BOOK':

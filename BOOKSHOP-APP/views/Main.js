@@ -12,42 +12,51 @@ import CreateBook from './Admin/book/CreateBook';
 import EditBook from './Admin/book/EditBook';
 import AllCategories from './Admin/category/AllCategories';
 import CreateCategory from './Admin/category/CreateCategory';
-
 import EditCategory from './Admin/category/EditCategory';
 import AllBills from './Admin/bill/AllBills';
 import EditBill from './Admin/bill/EditBill';
 import Statistical from './Admin/Statistical'
 import EditProfile from './Customer/EditProfile'
-import Pay from './Customer/Pay'
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const CustomerNavigatorScreen = () => {
+import CustomDrawer from './Customer/CustomeDrawer';
+import { DrawerLayout } from 'react-native-gesture-handler';
+
+ const CustomerNavigatorScreen = () => {
     const CustomerNavigator = createDrawerNavigator();
     return (
-        <CustomerNavigator.Navigator
-            initialRouteName='Customer'
-        >
+        <CustomerNavigator.Navigator drawerContent={props => <CustomDrawer   {...props}/>} 
+        screenOptions={{
+            drawerActiveBackgroundColor: '#E5E5E5',
+            drawerActiveTintColor: '#000',
+            drawerInactiveTintColor: '#333',
+            drawerLabelStyle: {
+              marginLeft: -25,
+              fontFamily: 'Roboto-Medium',
+              fontSize: 15,
+            }, 
+        }}>
             <CustomerNavigator.Screen name='HomeScreen' component={HomeNavigatorScreen}
                 options={{
                     // headerShown: false,
-                    title: 'Trang chủ'
+                    title: 'Trang chủ',
+                    drawerIcon: ({size}) => <Ionicons name='home' color='#000' size={size} />
+                   
                 }}
             />
             <CustomerNavigator.Screen name='Profile' component={Profile}
                 options={{
-                    headerShown: false,
-                    title: 'Thông tin tài khoản'
+                    // headerShown: false,
+                    title: 'Thông tin tài khoản',
+                    drawerIcon: ({ size }) => <Icon name='users' color='#000' size={size} />
                 }}
             />
             <CustomerNavigator.Screen name="Cart" component={Cart}
                 options={{
-                    headerShown: false,
-                    title: 'Giỏ hàng'
-                }}
-            />
-            <CustomerNavigator.Screen name="Pay" component={Pay}
-                options={{
-                    headerShown: false,
-                    title: 'Thanh toán'
+                    // headerShown: false,
+                    title: 'Giỏ hàng',
+                    drawerIcon: ({ size }) => <Icon name='shopping-cart' color='#000' size={size} />
                 }}
             />
         </CustomerNavigator.Navigator>
@@ -74,7 +83,8 @@ const HomeNavigatorScreen = () => {
                 options={{
                     headerShown: false
                 }} />
-            <HomeNavigator.Screen name='EditProfile' component={EditProfile} />
+            <HomeNavigator.Screen name='ProfileHome' component={Profile} />
+            <HomeNavigator.Screen name='CartHome' component={Cart} />
         </HomeNavigator.Navigator>
     );
 }
@@ -105,12 +115,12 @@ const AdminNavigatorScreen = () => {
                     title:'Quản lý hóa đơn'
                 }}
             />
-            <AdminNavigator.Screen name="Statistical" component={Statistical} 
+            {/* <AdminNavigator.Screen name="Statistical" component={Statistical} 
                                 options={{
                     // headerShown: false,
                     title:'Thống kê'
                 }}
-            />
+            /> */}
         </AdminNavigator.Navigator>
     );
 }
@@ -169,24 +179,23 @@ const ManagerCategoryScreen = () => {
     );
 }
 
-
 const Main = () => {
     const Main = createNativeStackNavigator();
     return (
 
         <Main.Navigator initialRouteName='Home'>
-            <Main.Screen name='CustomerSreen' component={CustomerNavigatorScreen}
+              <Main.Screen name='CustomerNavigatorScreen' component={CustomerNavigatorScreen}
                 options={{
                     headerShown: false
                 }} />
-            {/* <Main.Screen name='AdminSreen' component={AdminNavigatorScreen}
+            <Main.Screen name='AdminSreen' component={AdminNavigatorScreen}
                 options={{
                     headerShown: false
-                }} /> */}
+                }} />
         </Main.Navigator>
     );
 }
 
-export default Main
+export {CustomerNavigatorScreen,AdminNavigatorScreen} 
 
 const styles = StyleSheet.create({})

@@ -25,17 +25,17 @@ const AllBooks = ({ navigation }) => {
   const dispatch = useDispatch();
   let isSuccess = useSelector((state) => state.book.isSuccess)
   useEffect(() => {
-    // dispatch(fetchAllBooks())
-    // if(isSuccess==true){
-    //     dispatch(fetchAllBooks())
-    // }
+    dispatch(fetchAllBooks())
+    if(isSuccess==true){
+        dispatch(fetchAllBooks())
+    }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
     // dispatch(fetchSearchBook(key))
   }
   const handleDeleteBook = (id) => {
     // console.log(id)
-    // dispatch(fetchDeleteBooks(id))
+    dispatch(fetchDeleteBooks(id))
     // dispatch(fetchAllBooks())
   }
   return (
@@ -89,10 +89,9 @@ const AllBooks = ({ navigation }) => {
                           book: {
                             id: item.id,
                             nameBook: item.nameBook,
-                            
                             author: item.author,
-                            category: item.category,
-                            price: item.price,
+                           idCate: item.idCate,
+                            oldPrice: item.oldPrice,
                             descriptionBook: item.descriptionBook,
                             photoBook: item.photoBook,
                           },
@@ -214,4 +213,3 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
-7

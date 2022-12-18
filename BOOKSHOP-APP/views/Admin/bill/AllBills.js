@@ -26,7 +26,7 @@ const AllBills = ({ navigation }) => {
   const dispatch = useDispatch();
   let isSuccess = useSelector((state) => state.bill.isSuccess)
   useEffect(() => {
-    // dispatch(fetchAllBills())
+    dispatch(fetchAllBills())
     // if(isSuccess==true){
     //     dispatch(fetchAllBooks())
     // }
@@ -105,9 +105,9 @@ const AllBills = ({ navigation }) => {
                       <Icon name="edit" size={30} color={"blue"} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => handleDeleteBill(item.id)}>
+                    {/* <TouchableOpacity onPress={() => handleDeleteBill(item.id)}>
                       <Icon name="trash" size={30} color={"red"} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
               </Card>

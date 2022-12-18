@@ -10,92 +10,65 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { COLOURS } from "../Coler";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import  Ionicons  from 'react-native-vector-icons/Ionicons';
+import { useSelector, useDispatch } from "react-redux";
 
 const Login = ({ navigation }) => {
-  const [Username, setUsername] = useState("");
-  const [Password, setPassword] = useState("");
-  
-  // fetch("http://localhoss:3000/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username: Username,
-  //       password: Password,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.error) {
-  //         Alert.alert(data.error);
-  //       } else {
-  //         navigation.navigate("MainScreen");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       Alert.alert("Something went wrong");
-  //     });
-  // login with username and password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const account=useSelector((state) => state.account.account)
+  const isLogin=useSelector((state) => state.account.isLogin)
+  const CheckLogin=()=>{
+    if(isLogin){
+        if(account.Type=="admin"){
+            navigation.navigate("AdminScreen")
+        }else{
+            navigation.navigate("CustomerScreen")
+        }
+    }else{
+        //fech login
+        dispatch()
+    }
+
+  }
   return (
     <View style={styles.loginContainer}>
-      <View
-        // source={{uri: require('../assets/images/background.png')}}
-        // source={{uri: require('../assets/images/background.png')}}
-        // resizeMode='cover'
-        style={styles.bgContainer}
-      >
-        <View style={styles.logoLogin}>
-          <Image
-            style={styles.logoImg}
-            source={require("../assets/images/logo-book-shop.jpg")}
-          />
+            <View 
+                // source={{uri: require('../assets/images/background.png')}}
+                // source={{uri: require('../assets/images/background.png')}}
+                // resizeMode='cover'
+                style={styles.bgContainer}
+            >
+                <View style={styles.logoLogin}>
+                    <Image style={styles.logoImg} source={require('../assets/images/logo-book-shop.jpg')}/>
+                </View>
+                <Text style={styles.signinText}>    
+                    Đăng nhập
+                </Text>
+                <View style={styles.formContainer}>
+                    <View style={styles.inputContainer}>
+                        <TextInput placeholder='   Email' style={styles.inputText}/>
+                    </View>
+                    <View style={styles.inputContainer2}>
+                        <TextInput placeholder='   Mật khẩu' secureTextEntry={true} style={styles.inputText}/>
+                    </View>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("MainScreen")}>
+                        <Text style={styles.btnTxt} >Đăng nhập</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate("MainScreen")}>
+                        <Image style={styles.img} source={require('../assets/images/search.png')}/>
+                        <Text style={styles.btnTxt} >GOOGLE</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity >
+                        <Text style={styles.txtForgot} >Quên mật khẩu?</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                        <Text style={{marginLeft: 150, color: '#FF8787'}} >Đăng ký!</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
-        <Text style={styles.signinText}>Đăng nhập</Text>
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="   Username"
-              value={Username}
-              onChangeText={text => setUsername(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <View style={styles.inputContainer2}>
-            <TextInput
-              placeholder="   Mật khẩu"
-              value={Password}
-              secureTextEntry={true}
-              onChangeText={text => setPassword(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => navigation.navigate("MainScreen")}
-          >
-            <Text style={styles.btnTxt}>Đăng nhập</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btn1}
-            onPress={() => navigation.navigate("MainScreen")}
-          >
-            <Image
-              style={styles.img}
-              source={require("../assets/images/search.png")}
-            />
-            <Text style={styles.btnTxt}>GOOGLE</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.txtForgot}>Quên mật khẩu?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={{ marginLeft: 150, color: "#FF8787" }}>Đăng ký!</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
   );
 };
 
@@ -121,12 +94,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
     marginTop: 10,
-    color: "#000",
-  },
-  formContainer: {
-    width: "80%",
-    alignItems: "center",
-    justifyContent: "center",
+    color: '#000',
+
+},
+formContainer: {
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 50,
   },
   inputContainer: {
@@ -157,21 +131,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     marginTop: 20,
-  },
-  btn1: {
-    backgroundColor: "#3AB0FF",
-    width: "45%",
-    height: 45,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-    marginTop: 20,
-    flexDirection: "row",
-  },
-  btnTxt: {
-    color: "#FFF",
-  },
-  bgContainer: {
+    
+},
+btn1: {
+  backgroundColor: '#3AB0FF',
+  width: '45%',
+  height: 45,
+  alignItems: 'center',
+  justifyContent:'center',
+  borderRadius: 10,
+  marginTop: 20,
+  flexDirection: 'row',
+
+},
+btnTxt: {
+    color: '#FFF'
+},
+bgContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

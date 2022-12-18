@@ -6,13 +6,18 @@ import {
   Image,
   ToastAndroid,
   FlatList,
-  StyleSheet
+  StyleSheet,
+  TextInput,
+  Dimensions,
 } from 'react-native';
-import React, 
-{ useState, useEffect } from 'react';
+import Modal from 'react-native-modalbox';
+import React,
+{ useState, useEffect, useRef } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLOURS } from '../../Coler';
 // import { items } from '../data/Database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ref } from 'firebase/storage';
 
 let items = [
   {
@@ -22,9 +27,9 @@ let items = [
     price: 198100,
     descriptionBook:
       'Up to 20 hours battery life ',
-      photoBook: require('../../assets/image-book/LamBanVoiBauTroi.jpg'),
+    photoBook: require('../../assets/image-book/LamBanVoiBauTroi.jpg'),
     quantityBuy: 1,
-    isDiscount:false,
+    isDiscount: false,
     percent: 0
   },
   {
@@ -34,9 +39,9 @@ let items = [
     price: 78000,
     descriptionBook:
       'Up to 20 hours battery life ',
-      photoBook: require('../../assets/image-book/ban-ve-van-minh.jpg'),
+    photoBook: require('../../assets/image-book/ban-ve-van-minh.jpg'),
     quantityBuy: 1,
-    isDiscount:true,
+    isDiscount: true,
     percent: 20
   },
   {
@@ -46,9 +51,9 @@ let items = [
     price: 110000,
     descriptionBook:
       'Up to 20 hours battery life ',
-      photoBook: require('../../assets/image-book/xa-hoi-viet-nam.jpg'),
+    photoBook: require('../../assets/image-book/xa-hoi-viet-nam.jpg'),
     quantityBuy: 1,
-    isDiscount:false,
+    isDiscount: false,
     percent: 0
   },
   {
@@ -60,115 +65,96 @@ let items = [
       'Up to 20 hours battery life ',
     photoBook: require('../../assets/image-book/soivsGiavi9.jpg'),
     quantityBuy: 1,
-    isDiscount:true,
+    isDiscount: true,
     percent: 20
   }
 ];
-
-const Cart = ({ navigation }) => {
-  const [total, setTotal] = useState(null);
-  const [book, setBook] = useState(items);
+// { navigation }
+const Cart = () => {
   const feeShip = 5000;
+  const sreen  =Dimensions.get('window');
+  const [total, setTotal] = useState(0);
+  const [book, setBook] = useState([]);
+  const [nameCus, setNameCus] = useState("")
+  const [address, setAddress] = useState("")
+  const [phone, setPhone] = useState("")
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getDataFromDB();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  const getDataFromDB = () => {
-    let productData = [];
-    items.forEach(data => {
-      productData.push(data);
-    })
-    setBook(productData);
-    getTotal(productData);
-  }
-
-  // const getDataFromDB = async () => {
-  //   let productData = [];
-  //   items.forEach(data => {
-  //     if (data.category.includes('product')) {
-  //       productData.push(data);
-  //     }
-  //   });
-  //   setProduct(productData);
-
-  //   // let items = await AsyncStorage.getItem('cartItems');
-  //   // items = JSON.parse(items);
-  //   // let productData = [];
-  //   // if (items) {
-  //   //   Items.forEach(data => {
-  //   //     if (items.includes(data.id)) {
-  //   //       productData.push(data);
-  //   //       return;
-  //   //     }
-  //   //   });
-  //   //   setProduct(productData);
-  //   //   getTotal(productData);
-  //   // } else {
-  //   //   setProduct(false);
-  //   //   getTotal(false);
-  //   // }
-  // };
-
-  //get total price of all items in the cart
-  // const getTotal = productData => {
-  //   let total = 0;
-  //   for (let index = 0; index < productData.length; index++) {
-  //     let productPrice = productData[index].productPrice;
-  //     total = total + productPrice;
-  //   }
-  //   setTotal(total);
-  // };
-
-  //remove data from Cart
-  // const removeItemFromCart = async id => {
-  //   let itemArray = await AsyncStorage.getItem('cartItems');
-  //   itemArray = JSON.parse(itemArray);
-  //   if (itemArray) {
-  //     let array = itemArray;
-  //     for (let index = 0; index < array.length; index++) {
-  //       if (array[index] == id) {
-  //         array.splice(index, 1);
-  //       }
-
-  //       await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-  //       getDataFromDB();
-  //     }
-  //   }
-  // };
-
-  //checkout
-  const checkOut = () => {
-    // try {
-    //   await AsyncStorage.removeItem('cartItems');
-    // } catch (error) {
-    //   return error;
+    // setData=async ()=>{
+    //   await AsyncStorage.setItem('cartItems', JSON.stringify(temp));
     // }
-    // ToastAndroid.show('Items will be Deliverd SOON!', ToastAndroid.SHORT);
-    items = []
-    // setBook(items);
-    // getDataFromDB();
-    navigation.navigate('Home');
+    // setData()
+    getDataFromDB();
+  }, []);
+  const myModal=useRef(null)
+  const temp = [
+    {
+      id: "1xDd1J4VWDAMKIdflTCA",
+      nameBook: "Thám Tử Lừng Danh Conan - Tập 100",
+      photoBook: "https://firebasestorage.googleapis.com/v0/b/app-react-native-af9b3.appspot.com/o/images%2FThamTuLungDanhConan%20tap100.jpg?alt=media&token=d1546a29-1579-4dd2-9143-338f4c433ca6",
+      price: 20000,
+      quantityBuy: 2
+    }, {
+      id:"20yAMenArlRBTioCSAL3",
+      nameBook:"Làm Bạn Với Bầu Trời ( Bìa Cứng)",
+      photoBook:"https://firebasestorage.googleapis.com/v0/b/app-react-native-af9b3.appspot.com/o/images%2FLamBanVoiBauTroi.jpg?alt=media&token=657a2dc5-aabd-469d-a025-b049d474d146",
+      price:120000,
+      quantityBuy:1
+    },
+    {
+      id: "SpGxUUEcIYkvIbXqsmE4",
+      nameBook:"Dragon Ball Full Color - Phần Sáu: Ma Buu - Tập 1",
+      photoBook:"https://firebasestorage.googleapis.com/v0/b/app-react-native-af9b3.appspot.com/o/images%2Fdragon-ball-full-color-ma-buu-tap-1.jpg?alt=media&token=5ff5d7be-e689-4e1d-8896-8035bbe09bd4",
+      price:77000,
+      quantityBuy:1
+    }
+  ]
+
+  const getDataFromDB = async () => {
+    let items = await AsyncStorage.getItem('cartItems');
+    items = JSON.parse(items);
+    let productData = [];
+    if (items) {
+      items.forEach(data => {
+        productData.push(data);
+      });
+      setBook(productData);
+      getTotal(productData);
+    } else {
+      setBook([]);
+      getTotal(0);
+    }
   };
 
-  const pustQuantity = (id, quantityBuy) => {
-    items.forEach(data => {
+  const checkOut = async () => {
+    // await AsyncStorage.removeItem('cartItems');
+    // getDataFromDB();
+    let newBill = {
+      nameCustomer: nameCus,
+      address: address,
+      phone: phone,
+      total: parseInt(total+feeShip)  ,
+  }
+  console.log(newBill)
+  };
+
+  const pustQuantity = async (id, quantityBuy) => {
+    book.forEach(async data => {
       if (data.id == id) {
         data.quantityBuy = quantityBuy + 1;
       }
+      await AsyncStorage.setItem('cartItems', JSON.stringify(book));
       getDataFromDB();
     }
     )
   }
 
-  const minusQuantity = (id, quantityBuy) => {
-    items.forEach(data => {
+  const minusQuantity = async (id, quantityBuy) => {
+    book.forEach(async data => {
       if (data.id == id && data.quantityBuy > 1) {
         data.quantityBuy = quantityBuy - 1;
       }
+      await AsyncStorage.setItem('cartItems', JSON.stringify(book));
       getDataFromDB();
     }
     )
@@ -177,11 +163,11 @@ const Cart = ({ navigation }) => {
   const getTotal = productData => {
     let total = 0;
     for (let index = 0; index < productData.length; index++) {
-      let productPrice=0
-      if(productData[index].isDiscount){
-        let percent =productData[index].percent/100;
-        productPrice = (productData[index].price - productData[index].price * percent )* productData[index].quantityBuy;
-      }else{
+      let productPrice = 0
+      if (productData[index].isDiscount) {
+        let percent = productData[index].percent / 100;
+        productPrice = (productData[index].price - productData[index].price * percent) * productData[index].quantityBuy;
+      } else {
         productPrice = productData[index].price * productData[index].quantityBuy;
       }
       total = total + productPrice;
@@ -189,18 +175,19 @@ const Cart = ({ navigation }) => {
     setTotal(total);
   };
 
-  const removeItemFromCart = (id) => {
-    for (let index = 0; index < items.length; index++) {
+  const removeItemFromCart = async (id) => {
+    for (let index = 0; index < book.length; index++) {
       // console.log(items[index].id )
-      if (items[index].id == id) {
+      if (book[index].id == id) {
         // console.log("dgds")
-        items.splice(index, 1);
+        book.splice(index, 1);
       }
+      await AsyncStorage.setItem('cartItems', JSON.stringify(book));
       getDataFromDB();
     }
   };
 
-  const renderProducts = (item,index ) => (
+  const renderProducts = (item, index) => (
     <TouchableOpacity
       key={item.id}
       // onPress={() => navigation.navigate('ProductInfo', {productID: data.id})}
@@ -222,22 +209,22 @@ const Cart = ({ navigation }) => {
           </Text>
           <View
             style={styles.itemViewPrice}>
-            { item.isDiscount? 
+            {item.isDiscount ?
               <Text
                 style={styles.itemPrice}>
                 &#8363; {item.price - item.price * 0.2}
-              </Text> :              
+              </Text> :
               <Text
                 style={styles.itemPrice}>
-              </Text> }
-            { item.isDiscount ? 
+              </Text>}
+            {item.isDiscount ?
               <Text style={styles.itemPrice}>
-               (~&#8363; {item.price })
-              </Text> : 
+                (~&#8363; {item.price})
+              </Text> :
               <Text style={styles.itemPrice}>
-                &#8363; {item.price} 
+                &#8363; {item.price}
               </Text>
-              }
+            }
           </View>
         </View>
         <View
@@ -284,33 +271,88 @@ const Cart = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <View
-        style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialCommunityIcons
-            name="chevron-left"
-            style={styles.headerBtnBack}
+      <Modal
+      ref={myModal}
+        style={{
+          justifyContent:'center',
+          borderRadius:17,
+          width:sreen.width-60,
+          height:300,
+          paddingHorizontal:40
+        }}
+        position='center'
+        backdrop={true}
+        onClosed={()=>{
+          // console.log("dongdd")
+        }}
+        >
+          <Text 
+          style={{
+            fontSize:20,
+            fontWeight:'bold',
+            textAlign:'center',
+          }}
+          >Thông tin thanh toán</Text>
+          <TextInput
+            style={{
+              height:40,
+              borderRadius:5,
+              marginTop:20,
+              marginBottom:10,
+              borderWidth:1,
+              paddingLeft:10
+            }}
+            placeholder="Tên khách mua"
+            onChangeText={(nameCus) => setNameCus(nameCus)} 
           />
-        </TouchableOpacity>
-        <Text
-          style={styles.headerTitle}>
-          Chi tiết đơn hàng
-        </Text>
-        <View></View>
-      </View> */}
+          <TextInput
+            style={{
+              height:40,
+              borderRadius:5,
+              marginBottom:10,
+              borderWidth:1,
+              paddingLeft:10
+            }}
+            placeholder="Địa chỉ"
+            onChangeText={(address) => setAddress(address)}
+          />
+          <TextInput
+            style={{
+              height:40,
+              borderRadius:5,
+              marginBottom:10,
+              borderWidth:1,
+              paddingLeft:10
+            }}
+            placeholder="Số điện thoại"
+            onChangeText={(phone) => setPhone(phone)}
+          />
+          <TouchableOpacity
+          onPress={() =>checkOut()}
+          style={{
+            width: '100%',
+            height: 40,
+            backgroundColor: 'green',
+            borderRadius: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop:10
+          }}>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: '600',
+              letterSpacing: 1,
+              color: COLOURS.white,
+              textTransform: 'uppercase',
+            }}>
+            Xác nhận
+          </Text>
+          </TouchableOpacity>
+      </Modal>
       <ScrollView style={{ paddingTop: 15, paddingHorizontal: 16, }}>
-        {/* <Text
-          style={styles.bodyTitle}>
-          Giỏ hàng
-        </Text> */}
         <View>
-          {/* {book ?
-            <FlatList
-              data={book}
-              renderItem={renderProducts}
-              keyExtractor={item => item.id} />
-            : setBook(null)} */}
-            {book ? book.map(renderProducts): setBook(null)}
+          {book ? book.map(renderProducts) : setBook(null)}
         </View>
         <View>
           <View
@@ -349,7 +391,6 @@ const Cart = ({ navigation }) => {
               <Text
                 style={styles.infoMoneyPayment}>
                 &#8363; {total != 0 ? total + feeShip : 0}
-
               </Text>
             </View>
           </View>
@@ -358,18 +399,14 @@ const Cart = ({ navigation }) => {
       <View
         style={styles.paymentViewBtn}>
         <TouchableOpacity
-          onPress={() =>
-            //  (total != 0 ? checkOut() : null)
-            navigation.navigate('Pay')
-          }
+          onPress={() => myModal.current.open()}
           style={styles.paymentBtn}>
           <Text
             style={styles.paymentBtnText}>
-            {/* Thanh toán (&#8363;{total + total / 20} ) */}
             Thanh toán
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> 
     </View>
   )
 }
@@ -381,7 +418,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: COLOURS.backgroundLight,
+    backgroundColor: "#E5E5E5",
     // marginTop: 40,
     // position: 'relative',
   },
