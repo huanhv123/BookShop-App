@@ -1,4 +1,3 @@
-
 import {
     FlatList,
     StyleSheet,

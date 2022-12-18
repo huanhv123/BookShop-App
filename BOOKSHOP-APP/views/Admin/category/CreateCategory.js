@@ -16,6 +16,7 @@ const CreateCategory = ({ navigation }) => {
     const dispatch = useDispatch();
     const [id, setId] = useState("")
     const [nameCate, setNameCate] = useState("")
+    
 
     const handleAddBook = () => {
         let newCategory = {
