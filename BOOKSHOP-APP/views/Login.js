@@ -11,16 +11,30 @@ import {
 import React, { useState } from "react";
 import { COLOURS } from "../Coler";
 import  Ionicons  from 'react-native-vector-icons/Ionicons';
+import { useSelector, useDispatch } from "react-redux";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const account=useSelector((state) => state.account.account)
+  const isLogin=useSelector((state) => state.account.isLogin)
+  const CheckLogin=()=>{
+    if(isLogin){
+        if(account.Type=="admin"){
+            navigation.navigate("AdminScreen")
+        }else{
+            navigation.navigate("CustomerScreen")
+        }
+    }else{
+        //fech login
+        dispatch()
+    }
+
+  }
   return (
     <View style={styles.loginContainer}>
             <View 
-                // source={{uri: require('../assets/images/background.png')}}
-                // source={{uri: require('../assets/images/background.png')}}
-                // resizeMode='cover'
                 style={styles.bgContainer}
             >
                 <View style={styles.logoLogin}>
@@ -36,10 +50,10 @@ const Login = ({ navigation }) => {
                     <View style={styles.inputContainer2}>
                         <TextInput placeholder='   Mật khẩu' style={styles.inputText}/>
                     </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("AdminNavigatorScreen")}>
+                    <TouchableOpacity style={styles.btn} onPress={() => CheckLogin()}>
                         <Text style={styles.btnTxt} >Đăng nhập</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate("AdminNavigatorScreen")}>
+                    <TouchableOpacity style={styles.btn1} onPress={() => {}}>
                         <Image style={styles.img} source={require('../assets/images/search.png')}/>
                         <Text style={styles.btnTxt} >GOOGLE</Text>
                     </TouchableOpacity>
@@ -78,7 +92,6 @@ signinText: {
     textTransform: 'uppercase',
     marginTop: 10,
     color: '#000',
-
 },
 formContainer: {
     width: '80%',
@@ -114,7 +127,6 @@ btn: {
     justifyContent:'center',
     borderRadius: 10,
     marginTop: 20,
-    
 },
 btn1: {
   backgroundColor: '#3AB0FF',
@@ -125,7 +137,6 @@ btn1: {
   borderRadius: 10,
   marginTop: 20,
   flexDirection: 'row',
-
 },
 btnTxt: {
     color: '#FFF'

@@ -23,12 +23,11 @@ export default function App() {
           screenOptions={{
             headerShown: false,
             // headerTitleAlign:'center'
-          }}
-        >
+          }}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="CustomerNavigatorScreen" component={CustomerNavigatorScreen} />
-          <Stack.Screen name="AdminNavigatorScreen" component={AdminNavigatorScreen} />
+          <Stack.Screen name="CustomerScreen" component={CustomerNavigatorScreen} />
+          <Stack.Screen name="AdminScreen" component={AdminNavigatorScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       {/* <Cart/> */}

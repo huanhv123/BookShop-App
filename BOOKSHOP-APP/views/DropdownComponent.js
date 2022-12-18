@@ -13,46 +13,41 @@ const DropdownComponent = () => {
     // console.log(listcat)
     if (listcat.length == 0) {
       console.log("sadfas")
-      dispatch(fetchAllCategories())
+      // dispatch(fetchAllCategories())
     }
     console.log(value)
   }, [value]);
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-      <View >
+      {/* <View >
         <DropDownPicker
-          zIndex={3000}
-          zIndexInverse={1000}
-          placeholder="Select your city"
-          containerStyle={{ height: 40 }}
-          ArrowDownIconComponent={() => {
-            return (
-              <FontAwesomeIcon
-                size={18}
-                color={'red'}
-                style={{ paddingHorizontal: 5 }}
-                name="chevron-down"
-              />
-            );
-          }}
-          ArrowUpIconComponent={() => {
-            return (
-              <FontAwesomeIcon
-                size={18}
-                color={'red'}
-                style={{ paddingHorizontal: 5 }}
-                name="chevron-up"
-              />
-            );
-          }}
-          open={open}
-          value={value}
-          items={listcat}
-          setValue={setValue}
-          // setItems={setItems}
-          setOpen={setOpen}
-        />
-      </View>
+        ArrowDownIconComponent={() => {
+          return (
+            <FontAwesomeIcon
+              size={18}
+              color={'red'}
+              style={{ paddingHorizontal: 5 }}
+              name="chevron-down"
+            />
+          );
+        }}
+        ArrowUpIconComponent={() => {
+          return (
+            <FontAwesomeIcon
+              size={18}
+              color={'red'}
+              style={{ paddingHorizontal: 5 }}
+              name="chevron-up"
+            />
+          );
+        }}
+        open={open}
+        value={value}
+        items={category}
+        setValue={setValue}
+        setOpen={setOpen}
+      /> 
+      </View> */}
     </SafeAreaView>
   );
 };

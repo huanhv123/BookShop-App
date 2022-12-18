@@ -4,23 +4,31 @@ const initialState ={
         {id:2,nameCate:"Văn học"},
         {id:3,nameCate:"Kinh tế"},
     ],
-    isSuccess:false,
-    listcat:[]
+    listcategory:[],
+    categorie: {}
 };
+
+
 export default (state = initialState, action) => {
     switch (action.type) {
+        case 'GET_CATEGORY_BY_ID':
+            return {
+                ...state,
+                categorie: [...action.payload],
+                isSuccess: false,
+            };
         case 'GET_ALL_CATEGORY':
             const data = (action.payload).map((item) => (
                 {
-                    label: item.id,
-                    value: item.nameCate,
-                }))
-            console.log(data)
+                    value: item.id,
+                    label: item.nameCate,
+                }
+            ))
             return {
                 ...state,
                 categories: [...action.payload],
                 isSuccess: false,
-                listcat: data
+                listcategory: data
             };
         case 'SEARCH_CATEGORY':
             return {

@@ -6,7 +6,6 @@ export const fetchAllAddresss=()=>{
       try {
           const response=await fetch("");
           const address=await response.json();
-         
           dispatch(GetAddress(address))
       } catch (err) {
           console.error(err);

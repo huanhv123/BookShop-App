@@ -17,8 +17,6 @@ export const fetchAllAccounts=()=>{
   }
 }
 
-
-
 export const fetchCreateAccounts=(account)=>{
   return (dispatch)=>{
     const newData = async () => {

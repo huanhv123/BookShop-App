@@ -1,6 +1,8 @@
 
 const initialState ={
     accounts:[],
+    account:{},
+    isLogin:false
 };
 
 export default (state = initialState, action) => {

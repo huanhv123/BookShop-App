@@ -4,13 +4,7 @@ export const fetchAllBills=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-        // console.log("dsdsf")
-        // await axios.get("http://localhost:3000/book/getAllBooks")
-        // .then(book => {
-        //   console.log(book.data)
-        //     // dispatch(GetAllBook(book.data))
-        // });
-          const response=await fetch("");
+          const response=await fetch("http://localhost:3000/Bill/getAllBills");
           const bills=await response.json();
           // console.log(books)
           dispatch(GetAllBill(bills))

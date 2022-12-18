@@ -4,12 +4,6 @@ export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-        // console.log("dsdsf")
-        // await axios.get("http://localhost:3000/book/getAllBooks")
-        // .then(book => {
-        //   console.log(book.data)
-        //     // dispatch(GetAllBook(book.data))
-        // });
           const response=await fetch("http://"+ip+":3000/book/getAllBooks");
           const books=await response.json();
           // console.log(books)
