@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { View, Platform, Text, SafeAreaView } from 'react-native';
+import React, { useState , useEffect} from 'react';
+import { View, Platform, Text, SafeAreaView} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { fetchAllCategories } from '../redux/actions/categoriesAction';
 const DropdownComponent = () => {
+  const dispatch = useDispatch();
+  const category = useSelector((state) => state.category.listcategory);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: 1, value: 'apple' },
-    { label: 2, value: 'banana' },
-    { label: 3, value: 'dsfsdf' },
-  ]);
+  useEffect(() => {
+    if(category.length === 0){
+      dispatch(fetchAllCategories());
+    }
+    console.log(value);
+  }, [value]);
+   const [items, setItems] = useState(category);
   return (
     <SafeAreaView style={{ flex: 1,alignItems:'center',justifyContent:'center',padding:10 }}>
       <View >
@@ -36,9 +42,8 @@ const DropdownComponent = () => {
         }}
         open={open}
         value={value}
-        items={items}
+        items={category}
         setValue={setValue}
-        setItems={setItems}
         setOpen={setOpen}
       /> 
       </View>

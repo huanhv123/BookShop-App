@@ -1,31 +1,55 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity,Image,Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBook } from '../../../redux/actions/bookAction';
 import * as ImagePicker from 'expo-image-picker';
 import {firebase} from '../../../config/firebase';
+import { fetchAllCategories, fetchGetCategoryByID } from "../../../redux/actions/categoriesAction";
 import { getStorage, uploadString, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { fetchAllBooks,fetchUpdateBooks } from "../../../redux/actions/bookAction";
 import { async } from '@firebase/util';
+import DropDownPicker from 'react-native-dropdown-picker';
 const EditBook = ({route, navigation }) => {
   const dispatch = useDispatch();
   const {book} = route.params;
   const [id, setId] = useState(book.id)
   const [nameBook, setNameBook] = useState(book.nameBook)
   const [author, setAuthor] = useState(book.author)
-  const [category, setCategory] = useState(book.category)
-  // const [category, setCategory] = useState(book.category)
-  const [price, setPrice] = useState((book.price+""))
+  
+  const [price, setPrice] = useState((book.oldPrice+""))
   const [descriptionBook, setDescriptionBook] = useState(book.descriptionBook)
   const [photoBook, setPhotoBook] = useState(book.photoBook)
+
+
+
+  const [idCate, setIdCate] = useState(book.idCate)
+  const categorie = useSelector((state)=> state.category.categorie);
+  const categories = useSelector((state)=> state.category.categories);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+
+
+  useEffect(() => {
+    // if (idCate.length === 0) {
+      dispatch(fetchAllCategories());
+      dispatch(fetchGetCategoryByID(idCate));
+    // }
+    console.log(value)
+  }, [value]);
+  
+  
   const handleEditBook = () => {
     let newBook={
       id:id,
       nameBook: nameBook,
       author:author,
-      category: category,
+      category: idCate,
+      newPrice: parseInt(price),
+      quantityRemaining: 25,
+      releaseDate: "2021-09-01",
+      view: 2333,
       // category: category,
-      price: parseInt(price),
+      oldPrice: parseInt(price),
       descriptionBook:descriptionBook,
       photoBook: photoBook,
     }
@@ -115,15 +139,6 @@ const EditBook = ({route, navigation }) => {
   return (
     <View style={styles.CRUDContainer}>
       <View style={styles.formContainer}>
-        {/* <View style={styles.inputContainer}>
-          <TextInput 
-          placeholder="ID" 
-          style={styles.inputText}
-          onChangeText={(id)=>setId(id)} 
-          value={id}
-          editable={false}
-          />
-        </View> */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Name" style={styles.inputText}
           onChangeText={(nameBook)=>setNameBook(nameBook)} value={nameBook}/>
@@ -135,19 +150,18 @@ const EditBook = ({route, navigation }) => {
         </View>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Category" style={styles.inputText}
-          onChangeText={(category)=>setCategory(category)}  value={category}/>
+          onChangeText={(category)=>setIdCate(category)}  value={idCate}/>
         </View>
 
-        {/* <View style={styles.inputContainer}>
-          <TextInput placeholder="Category" style={styles.inputText} />
-        </View> */}
+       
+
+       
         <View style={styles.inputContainer}>
           <TextInput placeholder="Description" style={styles.inputText}
           onChangeText={(descriptionBook)=>setDescriptionBook(descriptionBook)}
           value={descriptionBook}
            />
         </View>
-        {/* { console.log(price)} */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Price" style={styles.inputText}
           onChangeText={(price)=>setPrice(price)}
@@ -162,6 +176,19 @@ const EditBook = ({route, navigation }) => {
                 <Text style={styles.btnTextx}>Chosse Image</Text>
             </TouchableOpacity>
         </View>
+        <View style={styles.inputContainer} >
+        <DropDownPicker 
+          style={{borderBottomWidth: 2,
+            borderBottomColor: "#d81b60"}}
+          open={open}
+          value={value}
+          items={categories}
+          setValue={setValue}
+          setOpen={setOpen}
+          setItems
+          placeholder="Select Category"
+        />
+      </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity style={styles.btnSubmit} onPress={()=>handleEditBook()}>
             <Text style={styles.btnText}>Submit </Text>
@@ -195,7 +222,6 @@ const styles = StyleSheet.create({
   },
   inputText: {
     height: 40,
-
     borderRadius: 10,
     borderBottomWidth: 2,
     borderBottomColor: "#d81b60",

@@ -1,36 +1,45 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { firebase } from '../../../config/firebase';
 import { getStorage, uploadString, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-
+import { useForm, Controller } from 'react-hook-form';
 import { async } from '@firebase/util';
 import { fetchAllBooks, fetchCreateBooks } from "../../../redux/actions/bookAction";
-
+import { fetchAllCategories } from "../../../redux/actions/categoriesAction";
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import DropDownPicker from 'react-native-dropdown-picker';
 const CreateBook = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
   const [nameBook, setNameBook] = useState("")
   const [author, setAuthor] = useState("")
-  const [category, setCategory] = useState("")
+  const category = useSelector((state) => state.category.listcategory);
   const [price, setPrice] = useState(0)
   const [descriptionBook, setDescriptionBook] = useState("")
   const [photoBook, setPhotoBook] = useState("https://firebasestorage.googleapis.com/v0/b/bookshop-7d314.appspot.com/o/images%2FLamBanVoiBauTroi.jpg?alt=media&token=44dec27d-e84a-4a3a-8f9c-9191172f1975")
-
+  useEffect(() => {
+    if (category.length === 0) {
+      dispatch(fetchAllCategories());
+    }
+    console.log(value);
+  }, [value]);
   const handleAddBook = () => {
     let newBook = {
       nameBook: nameBook,
       author: author,
-      category: category,
-      price: parseInt(price),
+      idCate: value,
+      oldPrice: parseInt(price),
+      newPrice: parseInt(price),
+      quantityRemaining: 25,
+      releaseDate: "2021-09-01",
+      view: 2333,
       descriptionBook: descriptionBook,
       photoBook: photoBook,
     }
-    // Bàn Về Văn Minh
-    // Fukuzawa Yukichi
-    // Bàn về văn minh
-    // 780000
     console.log(newBook)
     dispatch(fetchCreateBooks(newBook));
     // dispatch(fetchAllBooks());
@@ -118,12 +127,6 @@ const CreateBook = ({ navigation }) => {
   return (
     <View style={styles.CRUDContainer}>
       <View style={styles.formContainer}>
-        {/* <View style={styles.inputContainer}>
-          <TextInput 
-          placeholder="ID" 
-          style={styles.inputText}
-          onChangeText={(id)=>setId(id)} />
-        </View> */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Name" style={styles.inputText}
             onChangeText={(nameBook) => setNameBook(nameBook)} />
@@ -133,43 +136,66 @@ const CreateBook = ({ navigation }) => {
             onChangeText={(author) => setAuthor(author)}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput placeholder="Image" style={styles.inputText}
-            onChangeText={(category) => setCategory(category)} />
-        </View>
-
-        {/* <View style={styles.inputContainer}>
-          <TextInput placeholder="Category" style={styles.inputText} />
-        </View> */}
+        
         <View style={styles.inputContainer}>
           <TextInput placeholder="Description" style={styles.inputText}
             onChangeText={(descriptionBook) => setDescriptionBook(descriptionBook)} />
         </View>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Price" style={styles.inputText}
-            onChangeText={(price) => setPrice(price)}
+            onChangeText={(newprice) => setPrice(newprice)}
           />
         </View>
-        <View style={{
-          ...styles.inputContainer, justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Image source={{ uri: selectedImage.localUri }}
-            style={styles.img} />
-          <TouchableOpacity style={styles.btn} onPress={openImage}>
-            <Text style={styles.btnTextx}>Chosse Image</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btnSubmit} onPress={() => handleAddBook()}>
-            <Text style={styles.btnText}>Submit </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCancel} onPress={() => handleCancel()}>
-            <Text style={styles.btnText}>Cancel </Text>
-          </TouchableOpacity>
-        </View>
+        {/* <View style={styles.inputContainer}>
+          <TextInput placeholder="OldPrice" style={styles.inputText}
+            onChangeText={(oldprice) => setOldPrice(oldprice)}
+          />
+        </View> */}
+        {/* <View style={styles.inputContainer}>
+          <TextInput placeholder="Quantity" style={styles.inputText}
+            onChangeText={(quantityRemaining) => setQuantityRemaining(quantityRemaining)}
+          />
+        </View> */}
+        {/* <View style={styles.inputContainer}>
+          <TextInput placeholder="View" style={styles.inputText}
+            onChangeText={(view) => setView(view)}
+          />
+        </View> */}
+
+
+      
+      <View style={{
+        ...styles.inputContainer, justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <Image source={{ uri: selectedImage.localUri }}
+          style={styles.img} />
+        <TouchableOpacity style={styles.btn} onPress={openImage}>
+          <Text style={styles.btnTextx}>Chosse Image</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.inputContainer} >
+        <DropDownPicker
+          style={styles.inputText}
+          open={open}
+          value={value}
+          items={category}
+          setValue={setValue}
+          setOpen={setOpen}
+          placeholder="Select Category"
+
+        />
+      </View>
+      <View style={styles.btnContainer}>
+        <TouchableOpacity style={styles.btnSubmit} onPress={() => handleAddBook()}>
+          <Text style={styles.btnText}>Submit </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnCancel} onPress={() => handleCancel()}>
+          <Text style={styles.btnText}>Cancel </Text>
+        </TouchableOpacity>
       </View>
     </View>
+    </View >
   )
 }
 
@@ -186,7 +212,15 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-
+  dropdown: {
+    // width: "70%",
+    height: 40,
+    borderRadius: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: "#d81b60",
+    paddingVertical: 5,
+    marginBottom: 10,
+  },
   inputContainer: {
     width: "70%",
 
