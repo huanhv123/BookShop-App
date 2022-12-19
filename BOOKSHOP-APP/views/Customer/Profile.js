@@ -10,9 +10,8 @@ import {
 } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetCustomerById } from '../../redux/actions/customersAction';
+import { LogOut } from '../../redux/actions/accountAction';
 import { useEffect } from 'react';
-
-
 
 const Profile = ({ navigation }) => {
   // const customer = useSelector((state) => state.customer.customer);
@@ -25,12 +24,12 @@ const Profile = ({ navigation }) => {
       // console.log('sdsd')
       dispatch(fetchGetCustomerById(account.id))
     }
-    
     console.log(customer)
   }, [isCustomer]);
   
 
   const handleCancel = () => {
+    dispatch(LogOut())
     navigation.navigate("Login")
   }
   return (
@@ -62,10 +61,6 @@ const Profile = ({ navigation }) => {
         <View style={styles.row}>
           <Icon name="phone" color="#777777" size={20} />
           <Text style={{ color: "#777777", marginLeft: 20 }}>{customer.phoneCus}</Text>
-        </View>
-        <View style={styles.row}>
-          <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>huan@email.com</Text>
         </View>
       </View>
 
@@ -106,7 +101,9 @@ const Profile = ({ navigation }) => {
             <Text style={styles.menuItemText}>Lịch sử mua hàng</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile", {
+          customerInfo: customer
+        })}>
           <View style={styles.menuItem}>
             <Iconicon name="ios-settings-sharp" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Sửa thông tin cá nhân</Text>

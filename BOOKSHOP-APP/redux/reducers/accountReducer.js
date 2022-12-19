@@ -23,6 +23,7 @@ export default (state = initialState, action) => {
 
         case 'LOGIN_ACCOUNT':
             state.isLogin=false
+            state.account={}
             if(action.payload.mse==true){
                 const newAccount= {id: action.payload.id, type: action.payload.Type}
                 console.log(newAccount)
@@ -50,6 +51,12 @@ export default (state = initialState, action) => {
                 ...state,
                 isSuccess: false,
             };
+        case 'LOG_OUT':
+                return {
+                    ...state,
+                    account:{},
+                    isLogin:false
+                };
         case 'LOGIN_ACCOUNT':
             state.isSuccess = false
             if (action.payload.mse == true) {

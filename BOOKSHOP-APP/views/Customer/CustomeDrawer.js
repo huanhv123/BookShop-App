@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -10,11 +10,23 @@ import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
-
+import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { fetchGetCustomerById } from '../../redux/actions/customersAction';
+import { LogOut } from '../../redux/actions/accountAction';
 const CustomDrawer = props => {
+    const isCustomer = useSelector((state) => state.customer.isCustomer)
+    const account = useSelector((state) => state.account.account)
+    const customer = useSelector((state) => state.customer.customer)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if(isCustomer == false && customer.id == null){
+            // console.log('sdsd')
+            dispatch(fetchGetCustomerById(account.id))
+        }
+        console.log(customer)
+    }, [isCustomer]);
     return (
         <View  style={{flex:1}}>
             <DrawerContentScrollView
@@ -39,14 +51,17 @@ const CustomDrawer = props => {
                             // fontFamily: 'Roboto-Medium',
                             marginBottom: 5,
                         }}>
-                        John Doe
+                        {customer?.nameCus}
                     </Text>
                 </ImageBackground>
                 <View style={{  backgroundColor: '#fff', paddingTop: 10 }}>
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Login')}
+            <TouchableOpacity onPress={() => {
+                dispatch(LogOut())
+                props.navigation.navigate('Login')
+                }}
                 style={{ paddingVertical: 15, marginLeft: 17 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 280 }}>
                     <Ionicons name="exit-outline" size={30} />

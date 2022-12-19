@@ -77,6 +77,14 @@ export const GetAccount = (accounts) => {
   };
 };
 
+export const LogOut = () => {
+  console.log("addd")
+  return {
+    type: 'LOG_OUT',
+    payload:""
+  };
+};
+
 export const LoginAccount = (account) => {
   return {
     type: 'LOGIN_ACCOUNT',
@@ -90,8 +98,6 @@ export const CreatNewAccount = (mes) => {
       payload:mes
     };
 };
-
-
 
 export const UpdateAccount = (mes) => {
   return {

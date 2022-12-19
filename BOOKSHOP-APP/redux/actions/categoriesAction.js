@@ -6,15 +6,6 @@ export const fetchAllCategories=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-       
-          // const response=await fetch("");
-          // const categories=await response.json();
-        //   const categories=[
-        //     {id:1,nameCate:"Khoa học"},
-        //     {id:2,nameCate:"Văn học"},
-        //     {id:3,nameCate:"Kinh tế"},
-        // ]
-
           const response=await fetch("http://"+ip+":3000/category/getAllCategories");
           const categories=await response.json();
           

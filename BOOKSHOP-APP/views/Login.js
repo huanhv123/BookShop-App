@@ -58,14 +58,14 @@ const Login = ({ navigation }) => {
         <View style={styles.formContainer}>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="   Username"
+              placeholder="Username"
               onChangeText={(user) => setUsername(user)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputContainer2}>
             <TextInput
-              placeholder="   Mật khẩu"
+              placeholder="Mật khẩu"
               secureTextEntry={true}
               icon={<Text>Show</Text>}
               iconPosition="right"
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     textTransform: "uppercase",
-    marginTop: 10,
+    marginTop: 20,
     color: "#000",
   },
   formContainer: {
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: "#000",
     borderRadius: 10,
+    paddingLeft:10
   },
   btn: {
     backgroundColor: "#3AB0FF",
