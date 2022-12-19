@@ -59,6 +59,7 @@ const categoryControllr={
               }
             await db.collection("categories").add(newCategory);
             res.status(200).json({mse:true})
+            // console.log(newCategory);
         } catch (err) {
             res.status(500).json({mse:false});
         }

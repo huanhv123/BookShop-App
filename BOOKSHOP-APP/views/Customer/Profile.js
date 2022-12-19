@@ -8,10 +8,28 @@ import {
   Title,
   Caption,
 } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGetCustomerById } from '../../redux/actions/customersAction';
+import { useEffect } from 'react';
 
 
 
 const Profile = ({ navigation }) => {
+  // const customer = useSelector((state) => state.customer.customer);
+  const dispatch = useDispatch();
+  const isCustomer = useSelector((state) => state.customer.isCustomer)
+  const account = useSelector((state) => state.account.account)
+  const customer = useSelector((state) => state.customer.customer)
+  useEffect(() => {
+    if(isCustomer == false && customer.id == null){
+      // console.log('sdsd')
+      dispatch(fetchGetCustomerById(account.id))
+    }
+    
+    console.log(customer)
+  }, [isCustomer]);
+  
+
   const handleCancel = () => {
     navigation.navigate("Login")
   }
@@ -30,8 +48,8 @@ const Profile = ({ navigation }) => {
             <Title style={[styles.title, {
               marginTop: 15,
               marginBottom: 5,
-            }]}>Hoàng Văn Huân</Title>
-            <Caption style={styles.caption}>@huan</Caption>
+            }]}>{customer.nameCus}</Title>
+            {/* <Caption style={styles.caption}>@j_doe</Caption> */}
           </View>
         </View>
       </View>
@@ -39,11 +57,11 @@ const Profile = ({ navigation }) => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="map-marker-radius" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>TPHCM, Việt Nam</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{customer.adderss}</Text>
         </View>
         <View style={styles.row}>
           <Icon name="phone" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>84-900123009</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{customer.phoneCus}</Text>
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
@@ -130,7 +148,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   caption: {

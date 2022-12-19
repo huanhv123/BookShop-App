@@ -1,6 +1,8 @@
 
 const initialState ={
     customers:[],
+    customer: {},
+    isCustomer:false,
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +12,14 @@ export default (state = initialState, action) => {
                 ...state,
                 customers: [...action.payload],
                 isSuccess: false,
+            };
+        case 'GET_CUSTOMER_BY_ID':
+            // console.log(action.payload)
+            return {
+                ...state,
+                customer: action.payload,
+                isCustomer: true,
+                
             };
         case 'CREATE_NEW_CUSTOMER':
             state.isSuccess = false

@@ -15,7 +15,7 @@ export const fetchAllCategories=()=>{
         //     {id:3,nameCate:"Kinh tế"},
         // ]
 
-          const response=await fetch("http://localhost:3000/category/getAllCategories");
+          const response=await fetch("http://"+ip+":3000/category/getAllCategories");
           const categories=await response.json();
           
           dispatch(GetAllCategory(categories))
@@ -31,10 +31,11 @@ export const fetchSearchCategory=(key)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch(""+key);
+          const response=await fetch("http://"+ip+":3000/category/search/"+key);
           const categories=await response.json();
-         
+          
           dispatch(SearchCategory(categories))
+          // console.log(categories)
       } catch (err) {
           console.error(err);
       }
@@ -47,7 +48,7 @@ export const fetchGetCategoryByID=(id)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://localhost:3000/category/"+id);
+          const response=await fetch("http://"+ip+":3000/category/"+id);
           const categories=await response.json();
          
           dispatch(SearchCategory(categories))
@@ -64,7 +65,7 @@ export const fetchCreateCategories=(categories)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("", categories)
+        await axios.post("http://"+ip+":3000/category/createCategory", categories)
         .then(categories => {
           console.log(categories.data)
             dispatch(CreatNewCategory(categories.data))
@@ -82,7 +83,7 @@ export const fetchUpdateCategories=(categories)=>{
   return (dispatch)=>{
     const updateData = async () => {
       try {
-        await axios.put(""+categories.id, categories)
+        await axios.put("http://"+ip+":3000/category/"+categories.id, categories)
         .then(categories => {
             dispatch(UpdateCategory(categories.data))
         });
@@ -96,12 +97,14 @@ export const fetchUpdateCategories=(categories)=>{
 }
 
 export const fetchDeleteCategories=(id)=>{
+  // console.log(id)
   return (dispatch)=>{
     const deleteData = async () => {
       try {
-        await axios.delete("/"+id)
+        await axios.delete("http://"+ip+":3000/category/"+id)
         .then(categories => {
             dispatch(DeleteCategory(categories.data))
+            
         });
       } catch (err) {
           console.error(err);

@@ -58,12 +58,13 @@ const accountController={
                 "Type":"customer",
                 "password": req.body.password,
                 "user": req.body.user,
-            } 
+            }
+            console.log(newAccount);
             await db.collection("accounts").add(newAccount);
             await db.collection("accounts")
             .where('user', '==', req.body.user).get()
-            .then((res) => {
-                res.forEach(async (element) => {                 
+            .then((data) => {
+                data.forEach(async (element) => {                 
                      let newCus = {
                         "BoD":  "",
                         "adderss":  "",
