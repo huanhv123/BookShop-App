@@ -65,7 +65,7 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>john_doe@email.com</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>huan@email.com</Text>
         </View>
       </View>
 
@@ -73,16 +73,17 @@ const Profile = ({ navigation }) => {
         <View style={[styles.infoBox, {
           backgroundColor: '#ffffff',
           // borderRightColor: '#dddddd',
-          borderRightWidth: 1
+          borderRightWidth: 1,
+          fontSize: 20
         }]}>
-          <Title>₹140.50</Title>
-          <Caption>Tổng tiền đã tiêu</Caption>
+          <Title>140.500 VND</Title>
+          <Caption style={{fontSize:15, color:"#000"}}>Tổng tiền đã tiêu</Caption>
         </View>
         <View style={[styles.infoBox, {
           backgroundColor: '#ffffff',
         }]}>
           <Title>12</Title>
-          <Caption>Đơn hàng</Caption>
+          <Caption style={{fontSize:15, color:"#000"}}>Đơn hàng</Caption>
         </View>
       </View>
 

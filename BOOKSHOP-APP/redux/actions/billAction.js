@@ -1,10 +1,10 @@
 import axios from "axios";
-  
+import {ip} from '../../views/Main'
 export const fetchAllBills=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://localhost:3000/Bill/getAllBills");
+          const response=await fetch("http://"+ip+":3000/bill/getAllBills");
           const bills=await response.json();
           // console.log(books)
           dispatch(GetAllBill(bills))
@@ -17,10 +17,11 @@ export const fetchAllBills=()=>{
 }
 
 export const fetchSearchBill=(key)=>{
+  console.log(key)
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch(""+key);
+          const response=await fetch("http://"+ip+":3000/bill/search"+key);
           const bills=await response.json();
           // console.log(books)
           dispatch(SearchBill(bills))
@@ -36,10 +37,10 @@ export const fetchCreateBills=(bill)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("", bill)
+        await axios.post("http://"+ip+":3000/bill/CreateBill", bill)
         .then(bill => {
           console.log(bill.data)
-            dispatch(CreatNewBill(bill.data))
+            // dispatch(CreatNewBill(bill.mse))
         });
       } catch (err) {
           console.error(err);
@@ -64,23 +65,6 @@ export const fetchUpdateBills=(bill)=>{
       }
   };
   updateData();
-  }
-}
-
-export const fetchDeleteBills=(id)=>{
-  return (dispatch)=>{
-    const deleteData = async () => {
-      try {
-        await axios.delete(""+id)
-        .then(bill => {
-            dispatch(DeleteBill(bill.data))
-        });
-      } catch (err) {
-          console.error(err);
-          dispatch(DeleteBill(false))
-      }
-  };
-  deleteData();
   }
 }
 
@@ -114,13 +98,6 @@ export const CreatNewBill = (mes) => {
 export const UpdateBill = (mes) => {
   return {
       type: 'UPDATE_BILL',
-      payload: mes,
-  };
-};
-
-export const DeleteBill = (mes) => {
-  return {
-      type: 'DELETE_BILL',
       payload: mes,
   };
 };

@@ -75,7 +75,7 @@ const Home = ({ navigation }) => {
   const width = Dimensions.get('window').width / 2.3;
   useEffect(() => {
     if(SECTIONS.length==0){
-      // dispatch(fetchBookHome())
+      dispatch(fetchBookHome())
     }
   }, []);
 
@@ -181,7 +181,7 @@ const Home = ({ navigation }) => {
             marginBottom: 20
           }}>
           <TouchableOpacity
-            onPress={() =>navigation.navigate("ProfileHome")}
+            onPress={() =>navigation.navigate("Profile")}
           >
             <MaterialCommunityIcons
               name="account"
@@ -237,7 +237,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-          onPress={() => navigation.navigate('CartHome')}
+          onPress={() => navigation.navigate('Cart')}
           >
             <MaterialCommunityIcons
               name="cart"

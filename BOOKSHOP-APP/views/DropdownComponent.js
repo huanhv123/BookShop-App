@@ -6,20 +6,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAllCategories } from "../redux/actions/categoriesAction";
 const DropdownComponent = () => {
   const dispatch = useDispatch();
-  const listcat = useSelector((state) => state.category.listcat);
+  // const listcat = useSelector((state) => state.category.listcat);
+  const listcat=[
+      {value:"Khoa",label:"Khoa học"},
+      {value:"Văn",label:"Văn học"},
+      {value:"Kinh",label:"Kinh tế"},
+  ]
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("dd");
+  const [items, setItems] = useState([
+    {label: 'Apple', value: 'apple'},
+    {label: 'Banana', value: 'banana'},
+    {label: 'dddd', value: 'dd'}
+  ]);
   useEffect(() => {
     // console.log(listcat)
-    if (listcat.length == 0) {
-      console.log("sadfas")
-      // dispatch(fetchAllCategories())
-    }
+    // if (listcat.length == 0) {
+    //   console.log("sadfas")
+    //   // dispatch(fetchAllCategories())
+    // }
     console.log(value)
   }, [value]);
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-      {/* <View >
+      <View >
         <DropDownPicker
         ArrowDownIconComponent={() => {
           return (
@@ -43,11 +53,12 @@ const DropdownComponent = () => {
         }}
         open={open}
         value={value}
-        items={category}
+        items={items}
         setValue={setValue}
         setOpen={setOpen}
+        setItems={setItems}
       /> 
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 };

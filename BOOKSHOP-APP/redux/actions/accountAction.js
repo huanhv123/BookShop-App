@@ -1,6 +1,5 @@
 import axios from "axios";
-var ip="localhost"
-
+import {ip} from '../../views/Main'
 export const fetchAllAccounts=()=>{
   return (dispatch)=>{
     const getData = async () => {

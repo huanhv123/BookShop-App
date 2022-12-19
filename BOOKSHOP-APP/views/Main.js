@@ -19,6 +19,8 @@ import Statistical from './Admin/Statistical'
 import EditProfile from './Customer/EditProfile'
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import CustomDrawer from './Customer/CustomeDrawer';
 import { DrawerLayout } from 'react-native-gesture-handler';
@@ -27,15 +29,14 @@ import { DrawerLayout } from 'react-native-gesture-handler';
     const CustomerNavigator = createDrawerNavigator();
     return (
         <CustomerNavigator.Navigator 
-        // drawerContent={props => <CustomDrawer   {...props}/>} 
+         drawerContent={props => <CustomDrawer   {...props}/>} 
         screenOptions={{
             drawerActiveBackgroundColor: '#E5E5E5',
             drawerActiveTintColor: '#000',
             drawerInactiveTintColor: '#333',
             drawerLabelStyle: {
-              marginLeft: -25,
-            //   fontFamily: 'Roboto-Medium',
               fontSize: 15,
+            //   marginTop: 150,
             }, 
         }}>
             <CustomerNavigator.Screen name='HomeScreen' component={HomeNavigatorScreen}
@@ -84,8 +85,10 @@ const HomeNavigatorScreen = () => {
                 options={{
                     headerShown: false
                 }} />
-            <HomeNavigator.Screen name='ProfileHome' component={Profile} />
-            <HomeNavigator.Screen name='CartHome' component={Cart} />
+            <HomeNavigator.Screen name='EditProfile' component={EditProfile}
+                options={{
+                    headerShown: false
+                }} />
         </HomeNavigator.Navigator>
     );
 }
@@ -94,7 +97,18 @@ const AdminNavigatorScreen = () => {
     const AdminNavigator = createDrawerNavigator();
     return (
         <AdminNavigator.Navigator
-            initialRouteName='Admin'
+        drawerContent={props => <CustomDrawer   {...props}/>} 
+        screenOptions={{
+            drawerActiveBackgroundColor: '#E5E5E5',
+            drawerActiveTintColor: '#000',
+            drawerInactiveTintColor: '#333',
+            drawerLabelStyle: {
+            //   marginLeft: -25,
+            //   fontFamily: 'Times-New-Roman',
+            
+              fontSize: 15,
+            }, 
+        }}
         // screenOptions={{
         //     headerShown: false
         // }}
@@ -102,18 +116,21 @@ const AdminNavigatorScreen = () => {
             <AdminNavigator.Screen name='ManagerBook' component={ManagerBookScreen} 
                 options={{
                     // headerShown: false,
-                    title:'Quản lý sách'
+                    title:'Quản lý sách',
+                    drawerIcon: ({size}) => <Ionicons name='book' color='#000' size={size} />
                 }}
             />
             <AdminNavigator.Screen name='ManagerCategory' component={ManagerCategoryScreen}
                             options={{
                     // headerShown: false,
-                    title:'Quản lý danh mục'
+                    title:'Quản lý danh mục',
+                    drawerIcon: ({size}) => <MaterialIcons name='category' color='#000' size={size} />
                 }} />
             <AdminNavigator.Screen name="ManagerBill" component={ManagerBillScreen} 
                                 options={{
                     // headerShown: false,
-                    title:'Quản lý hóa đơn'
+                    title:'Quản lý hóa đơn',
+                    drawerIcon: ({size}) => <MaterialCommunityIcons name='receipt' color='#000' size={size} />
                 }}
             />
             {/* <AdminNavigator.Screen name="Statistical" component={Statistical} 
@@ -197,6 +214,7 @@ const Main = () => {
     );
 }
 
-export {CustomerNavigatorScreen,AdminNavigatorScreen} 
+const ip="localhost"
+export {CustomerNavigatorScreen,AdminNavigatorScreen,ip} 
 
 const styles = StyleSheet.create({})

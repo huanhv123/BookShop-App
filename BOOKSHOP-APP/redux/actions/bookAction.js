@@ -1,5 +1,5 @@
 import axios from "axios";
-  var ip="localhost"
+import {ip} from '../../views/Main'
 export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -20,6 +20,7 @@ export const fetchBookHome=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
+        // console.log(ip)
           const response=await fetch("http://"+ip+":3000/book/GetAllBooksToHome");
           const books=await response.json();
           dispatch(GetBookHome(books))
@@ -35,7 +36,7 @@ export const fetchSearchBook=(key)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://"+ip+":3000/book/"+key);
+          const response=await fetch("http://"+ip+":3000/book/search/"+key);
           const books=await response.json();
           // console.log(books)
           dispatch(SearchBook(books))

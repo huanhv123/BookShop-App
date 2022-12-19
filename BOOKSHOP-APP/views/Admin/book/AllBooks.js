@@ -31,8 +31,14 @@ const AllBooks = ({ navigation }) => {
     }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
-    // dispatch(fetchSearchBook(key))
+    if(key.length  > 0){
+   
+    dispatch(fetchSearchBook(key))
   }
+  else  {
+    dispatch(fetchAllBooks())
+  }
+}
   const handleDeleteBook = (id) => {
     // console.log(id)
     dispatch(fetchDeleteBooks(id))
@@ -90,7 +96,7 @@ const AllBooks = ({ navigation }) => {
                             id: item.id,
                             nameBook: item.nameBook,
                             author: item.author,
-                           idCate: item.idCate,
+                            idCate: item.idCate,
                             oldPrice: item.oldPrice,
                             descriptionBook: item.descriptionBook,
                             photoBook: item.photoBook,

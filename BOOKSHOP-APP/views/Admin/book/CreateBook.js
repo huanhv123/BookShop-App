@@ -136,13 +136,23 @@ const CreateBook = ({ navigation }) => {
             onChangeText={(author) => setAuthor(author)}
           />
         </View>
-        
+        <View style={{...styles.inputContainer,marginBottom:10,zIndex: 1}} >
+        <DropDownPicker
+          style={styles.inputText}
+          open={open}
+          value={value}
+          items={category}
+          setValue={setValue}
+          setOpen={setOpen}
+          placeholder="Chọn danh mục"
+        />
+      </View>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Description" style={styles.inputText}
             onChangeText={(descriptionBook) => setDescriptionBook(descriptionBook)} />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Price" style={styles.inputText}
+          <TextInput placeholder="Price" style={styles.inputText} 
             onChangeText={(newprice) => setPrice(newprice)}
           />
         </View>
@@ -161,9 +171,6 @@ const CreateBook = ({ navigation }) => {
             onChangeText={(view) => setView(view)}
           />
         </View> */}
-
-
-      
       <View style={{
         ...styles.inputContainer, justifyContent: 'center',
         alignItems: 'center'
@@ -174,18 +181,7 @@ const CreateBook = ({ navigation }) => {
           <Text style={styles.btnTextx}>Chosse Image</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.inputContainer} >
-        <DropDownPicker
-          style={styles.inputText}
-          open={open}
-          value={value}
-          items={category}
-          setValue={setValue}
-          setOpen={setOpen}
-          placeholder="Select Category"
 
-        />
-      </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.btnSubmit} onPress={() => handleAddBook()}>
           <Text style={styles.btnText}>Submit </Text>
