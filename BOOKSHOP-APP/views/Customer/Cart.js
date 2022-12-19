@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ref } from 'firebase/storage';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCreateBills } from '../../redux/actions/billAction';
+import { fetchGetCustomerById } from '../../redux/actions/customersAction';
 let items = [
   {
     id: 1,
@@ -80,13 +81,20 @@ const Cart = ({ navigation }) => {
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
   const dispatch = useDispatch();
+  const account = useSelector((state) => state.account.account)
+  const customer = useSelector((state) => state.customer.customer)
+  const isCustomer = useSelector((state) => state.customer.isCustomer)
   useEffect(() => {
     // setData=async ()=>{
     //   await AsyncStorage.setItem('cartItems', JSON.stringify(temp));
     // }
     // setData()
+    if(isCustomer == false && customer.id == null){
+      // console.log('sdsd')
+      dispatch(fetchGetCustomerById(account.id))
+    }
     getDataFromDB();
-  }, []);
+  }, [isCustomer]);
   const myModal=useRef(null)
   const temp = [
     {
@@ -143,7 +151,7 @@ const Cart = ({ navigation }) => {
     }
 
     let newBill = {
-      idCus:'2344gfhffh',
+      idCus:customer.id,
       nameCus: nameCus,
       address: address,
       phoneCus: phone,
@@ -151,9 +159,9 @@ const Cart = ({ navigation }) => {
       total: parseInt(total+feeShip)  ,
   }
   console.log(newBill)
-  dispatch(fetchCreateBills(newBill))
-  await AsyncStorage.removeItem('cartItems');
-  navigation.navigate("Home")
+  // dispatch(fetchCreateBills(newBill))
+  // await AsyncStorage.removeItem('cartItems');
+  // navigation.navigate("Home")
   };
 
   const pustQuantity = async (id, quantityBuy) => {
