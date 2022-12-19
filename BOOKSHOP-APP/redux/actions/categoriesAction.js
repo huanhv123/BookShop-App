@@ -15,7 +15,7 @@ export const fetchAllCategories=()=>{
         //     {id:3,nameCate:"Kinh tế"},
         // ]
 
-          const response=await fetch("http://localhost:3000/category/getAllCategories");
+          const response=await fetch("http://"+ip+":3000/category/getAllCategories");
           const categories=await response.json();
           
           dispatch(GetAllCategory(categories))
@@ -47,7 +47,7 @@ export const fetchGetCategoryByID=(id)=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
-          const response=await fetch("http://localhost:3000/category/"+id);
+          const response=await fetch("http://"+ip+":3000/category/"+id);
           const categories=await response.json();
          
           dispatch(SearchCategory(categories))
