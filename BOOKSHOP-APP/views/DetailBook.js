@@ -429,8 +429,7 @@ const DetailBook = ({navigation, route}) => {
                 color: 'black',
                 // width: '100%'
               }}>
-              Nhằm ngăn chặn âm mưu gây chiến, giữ vững nền hòa bình Đông - Tây, điệp viên hàng đầu của Westalis, Twilight phải xây dựng một gia đình và cho con theo học tại học viện danh giá nhất Ostania hòng tiếp cận yếu nhân cầm đầu phe chủ chiến của đất nước này: Desmon Donavan! Và thật tình cờ, đứa trẻ mà Twilight nhận làm "con" ở cô nhi viện, Anya, lại có khả năng đọc suy nghĩ của người khác. Chưa kể "người vợ" anh buộc phải chọn lựa trong lúc vội vàng, Yor, lại là một… sát thủ...!!
-              Ba người với lí do riêng để che giấu thân phận đã cùng chung sống với nhau dưới một mái nhà. Từ đây câu chuyện siêu hấp dẫn và hài hước về gia đình điệp viên chính thức mở ra...!!
+              {book.descriptionBook}
             </ReadMore>
           </View>
         </View>

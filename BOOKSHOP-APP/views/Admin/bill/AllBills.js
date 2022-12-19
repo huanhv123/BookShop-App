@@ -19,6 +19,7 @@ import { fetchAllBills,fetchSearchBill,fetchDeleteBills } from "../../../redux/a
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const AllBills = ({ navigation }) => {
   const bills = useSelector((state) => state.bill.bills);
@@ -46,7 +47,7 @@ const AllBills = ({ navigation }) => {
   // }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <View style={styles.leftHeader}>
           <TextInput placeholder="Search" style={styles.inputText}
             onChangeText={(text) => setSearch(text)}
@@ -65,19 +66,7 @@ const AllBills = ({ navigation }) => {
           </TouchableOpacity>
 
         </View>
-        {/* <View style={styles.rightHeader}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("CreateBook")}
-          >
-            <AntDesign
-              name="pluscircleo"
-              size={35}
-              color={"#000"}
-            />
-          </TouchableOpacity>
-        </View> */}
-      </View>
+      </View> */}
       <ScrollView>
         {bills != null ? (
                 bills.map((item)=>
@@ -107,7 +96,7 @@ const AllBills = ({ navigation }) => {
                       }
                       style={{ marginHorizontal: 16 }}
                     >
-                      <Icon name="edit" size={30} color={"blue"} />
+                      <MaterialIcons name="details" size={30} color={"blue"} />
                     </TouchableOpacity>
 
                     {/* <TouchableOpacity onPress={() => handleDeleteBill(item.id)}>

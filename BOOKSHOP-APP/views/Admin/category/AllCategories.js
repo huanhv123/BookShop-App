@@ -53,6 +53,11 @@ const AllCategories = ({ navigation }) => {
                     />
                     <TouchableOpacity
                         onPress={() => handleSeachCategory(search)}
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "55%",
+                          }}
                     >
                         <Ionicons
                             name="search"
@@ -140,7 +145,7 @@ const styles = StyleSheet.create({
     },
     leftHeader: {
         // backgroundColor:"yellow",
-        width: "88%",
+        width: "70%",
         // marginBottom: 10,
         borderRadius: 10,
         justifyContent: "space-between",
@@ -148,25 +153,25 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: 50,
         // paddingLeft: 30,
-    },
-    inputText: {
+      },
+      inputText: {
         justifyContent: "center",
         alignItems: "center",
         color: "#000",
         borderRadius: 10,
         borderColor: '#000',
         borderWidth: 2,
-        width: "85%",
+        width: "95%",
         height: 50,
         // backgroundColor:"green",
         paddingLeft: "6%",
         fontSize: 20,
         fontWeight: "500",
-    },
-    iconSearch: {
+      },
+      iconSearch: {
         // backgroundColor:"red",
-        width: "13%",
-    },
+        width: "43%",
+      },
     rightHeader: {
         // backgroundColor:"green",
         width: "10%",
