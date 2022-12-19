@@ -16,6 +16,26 @@ export const fetchAllAccounts=()=>{
   }
 }
 
+
+
+export const fetchLoginAccounts=(account)=>{
+  return (dispatch)=>{
+    const newData = async () => {
+      try {
+        await axios.post("http://"+ip+":3000/account/login", account)
+        .then(account => {
+          console.log(account.data)
+          // dispatch(LoginAccount(account.data))
+        });
+      } catch (err) {
+          console.error(err);
+          dispatch(LoginAccount(false))
+      }
+  };
+  newData();
+  }
+}
+
 export const fetchCreateAccounts=(account)=>{
   return (dispatch)=>{
     const newData = async () => {
@@ -67,6 +87,13 @@ export const CreatNewAccount = (mes) => {
       type: 'CREATE_NEW_ACCOUNT',
       payload:mes
     };
+};
+
+export const LoginAccount = (mes) => {
+  return {
+    type: 'LOGIN_ACCOUNT',
+    payload:mes
+  };
 };
 
 export const UpdateAccount = (mes) => {

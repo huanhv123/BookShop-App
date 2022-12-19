@@ -32,6 +32,9 @@ const Login = ({ navigation }) => {
     }
 
   }
+
+
+  
   return (
     <View style={styles.loginContainer}>
             <View 

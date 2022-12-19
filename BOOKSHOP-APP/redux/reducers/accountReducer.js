@@ -15,17 +15,30 @@ export default (state = initialState, action) => {
             };
         
         case 'CREATE_NEW_ACCOUNT':
-            state.isSuccess=false
-            if(action.payload.mse==true){
+            state.isSuccess = false
+            if (action.payload.mse == true) {
                 // console.log("sdsdf")
                 return {
                     ...state,
-                    isSuccess :true,
+                    isSuccess: true,
                 };
             }
             return {
                 ...state,
-                isSuccess :false,
+                isSuccess: false,
+            };
+        case 'LOGIN_ACCOUNT':
+            state.isSuccess = false
+            if (action.payload.mse == true) {
+                // console.log("sdsdf")
+                return {
+                    ...state,
+                    isSuccess: true,
+                };
+            }
+            return {
+                ...state,
+                isSuccess: false,
             };
         case 'UPDATE_ACCOUNT':
             state.isSuccess=false
