@@ -16,19 +16,20 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const CustomDrawer = props => {
     return (
-        <View style={{flex:1}}>
-            <DrawerContentScrollView  {...props}
+        <View  style={{flex:1}}>
+            <DrawerContentScrollView
+                {...props}
                 contentContainerStyle={{ backgroundColor: '#fff', flex: 1 }}>
                 <ImageBackground
                     source={require('../../assets/images/background.png')}
                     resizeMode='stretch'
-                    style={{ padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+                    style={{ padding: 20 ,justifyContent: 'center' }}>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('Profile')}
                     >
                         <Image
                             source={require('../../assets/images/facebook.png')}
-                            style={{ height: 80, width: 80, }}
+                            style={{ height: 80, width: 80,  }}
                         />
                     </TouchableOpacity>
                     <Text
@@ -47,12 +48,11 @@ const CustomDrawer = props => {
             </DrawerContentScrollView>
             <TouchableOpacity onPress={() => props.navigation.navigate('Login')}
                 style={{ paddingVertical: 15, marginLeft: 17 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 280 }}>
                     <Ionicons name="exit-outline" size={30} />
                     <Text
                         style={{
                             fontSize: 20,
-                            // fontFamily: 'Roboto-Medium',
                             marginLeft: 5,
                         }}>
                         Đăng xuất

@@ -30,8 +30,8 @@ const Profile = ({ navigation }) => {
             <Title style={[styles.title, {
               marginTop: 15,
               marginBottom: 5,
-            }]}>John Doe</Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+            }]}>Hoàng Văn Huân</Title>
+            <Caption style={styles.caption}>@huan</Caption>
           </View>
         </View>
       </View>
@@ -39,15 +39,15 @@ const Profile = ({ navigation }) => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="map-marker-radius" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>Kolkata, India</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>TPHCM, Việt Nam</Text>
         </View>
         <View style={styles.row}>
           <Icon name="phone" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>+91-900000009</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>84-900123009</Text>
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>john_doe@email.com</Text>
+          <Text style={{ color: "#777777", marginLeft: 20 }}>huan@email.com</Text>
         </View>
       </View>
 
@@ -55,16 +55,17 @@ const Profile = ({ navigation }) => {
         <View style={[styles.infoBox, {
           backgroundColor: '#ffffff',
           // borderRightColor: '#dddddd',
-          borderRightWidth: 1
+          borderRightWidth: 1,
+          fontSize: 20
         }]}>
-          <Title>₹140.50</Title>
-          <Caption>Tổng tiền đã tiêu</Caption>
+          <Title>140.500 VND</Title>
+          <Caption style={{fontSize:15, color:"#000"}}>Tổng tiền đã tiêu</Caption>
         </View>
         <View style={[styles.infoBox, {
           backgroundColor: '#ffffff',
         }]}>
           <Title>12</Title>
-          <Caption>Đơn hàng</Caption>
+          <Caption style={{fontSize:15, color:"#000"}}>Đơn hàng</Caption>
         </View>
       </View>
 

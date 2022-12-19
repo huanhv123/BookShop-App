@@ -31,8 +31,14 @@ const AllBooks = ({ navigation }) => {
     }
   }, [isSuccess]);
   const handleSeachBook = (key) => {
-    // dispatch(fetchSearchBook(key))
+    if(key.length  > 0){
+   
+    dispatch(fetchSearchBook(key))
   }
+  else  {
+    dispatch(fetchAllBooks())
+  }
+}
   const handleDeleteBook = (id) => {
     // console.log(id)
     dispatch(fetchDeleteBooks(id))
