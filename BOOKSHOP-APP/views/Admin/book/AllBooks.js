@@ -96,7 +96,7 @@ const AllBooks = ({ navigation }) => {
                             id: item.id,
                             nameBook: item.nameBook,
                             author: item.author,
-                           idCate: item.idCate,
+                            idCate: item.idCate,
                             oldPrice: item.oldPrice,
                             descriptionBook: item.descriptionBook,
                             photoBook: item.photoBook,

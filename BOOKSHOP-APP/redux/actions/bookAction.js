@@ -1,5 +1,5 @@
 import axios from "axios";
-  var ip="192.168.1.7"
+import {ip} from '../../views/Main'
 export const fetchAllBooks=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -20,6 +20,7 @@ export const fetchBookHome=()=>{
   return (dispatch)=>{
     const getData = async () => {
       try {
+        // console.log(ip)
           const response=await fetch("http://"+ip+":3000/book/GetAllBooksToHome");
           const books=await response.json();
           dispatch(GetBookHome(books))

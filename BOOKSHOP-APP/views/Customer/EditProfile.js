@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const EditProfile = (navigation) => {
+const EditProfile = ({navigation}) => {
   return (
     <View
       style={{
@@ -130,7 +130,7 @@ const EditProfile = (navigation) => {
             <Text style={styles.btnText}>Chỉnh sửa</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate("Profile")}>
           <View style={styles.btn2}>
             <Text style={styles.btnText}>Hủy</Text>
           </View>

@@ -71,7 +71,7 @@ let items = [
   }
 ];
 // { navigation }
-const Cart = () => {
+const Cart = ({ navigation }) => {
   const feeShip = 5000;
   const sreen  =Dimensions.get('window');
   const [total, setTotal] = useState(0);
@@ -133,10 +133,17 @@ const Cart = () => {
     items = JSON.parse(items);
     if(!items){
       items=[]
+    }else{
+      items = items.map((data) => (
+          {
+            idBook:data.id,
+            quantityBuy:data.quantityBuy
+          }
+        ));
     }
 
     let newBill = {
-      idCus:'sdfsdf',
+      idCus:'2344gfhffh',
       nameCus: nameCus,
       address: address,
       phoneCus: phone,
@@ -145,8 +152,8 @@ const Cart = () => {
   }
   console.log(newBill)
   dispatch(fetchCreateBills(newBill))
-    // await AsyncStorage.removeItem('cartItems');
-    // getDataFromDB();
+  await AsyncStorage.removeItem('cartItems');
+  navigation.navigate("Home")
   };
 
   const pustQuantity = async (id, quantityBuy) => {

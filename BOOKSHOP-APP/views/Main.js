@@ -214,6 +214,7 @@ const Main = () => {
     );
 }
 
-export {CustomerNavigatorScreen,AdminNavigatorScreen} 
+const ip="localhost"
+export {CustomerNavigatorScreen,AdminNavigatorScreen,ip} 
 
 const styles = StyleSheet.create({})

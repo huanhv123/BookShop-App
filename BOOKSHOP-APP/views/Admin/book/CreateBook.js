@@ -144,8 +144,7 @@ const CreateBook = ({ navigation }) => {
           items={category}
           setValue={setValue}
           setOpen={setOpen}
-          placeholder="Select Category"
-
+          placeholder="Chọn danh mục"
         />
       </View>
         <View style={styles.inputContainer}>
@@ -172,9 +171,6 @@ const CreateBook = ({ navigation }) => {
             onChangeText={(view) => setView(view)}
           />
         </View> */}
-
-
-      
       <View style={{
         ...styles.inputContainer, justifyContent: 'center',
         alignItems: 'center'

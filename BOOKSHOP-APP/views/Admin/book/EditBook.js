@@ -27,6 +27,7 @@ const EditBook = ({ route, navigation }) => {
     if (categories.length == 0) {
     dispatch(fetchAllCategories());
     }
+    // console.log(idCate)
     console.log(value)
   }, [value]);
 

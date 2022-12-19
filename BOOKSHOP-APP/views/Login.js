@@ -50,7 +50,7 @@ const Login = ({ navigation }) => {
                     <View style={styles.inputContainer2}>
                         <TextInput placeholder='   Mật khẩu' style={styles.inputText}/>
                     </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("CustomerScreen")}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("AdminScreen")}>
                         <Text style={styles.btnTxt} >Đăng nhập</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btn1} onPress={() => {}}>

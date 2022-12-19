@@ -17,9 +17,8 @@ import CreateBook from './views/Admin/book/CreateBook';
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
-
     <Provider store={store}>
-      {/* <NavigationContainer>
+      <NavigationContainer>
        <Stack.Navigator
           screenOptions={{
             headerShown: false,
@@ -29,10 +28,10 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="CustomerScreen" component={CustomerNavigatorScreen} />
           <Stack.Screen name="AdminScreen" component={AdminNavigatorScreen} />
-          {/* <Stack.Screen name="Home" component={Home} /> */}
+          <Stack.Screen name="Home" component={Home} /> 
         </Stack.Navigator>
-      </NavigationContainer> */}
-      <CreateBook/>
+      </NavigationContainer>
+      {/* <CreateBook/> */}
     </Provider> 
 
   );

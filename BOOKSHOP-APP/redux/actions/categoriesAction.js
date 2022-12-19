@@ -1,5 +1,6 @@
 import axios from "axios";
   
+import {ip} from '../../views/Main'
 
 export const fetchAllCategories=()=>{
   return (dispatch)=>{
@@ -8,14 +9,14 @@ export const fetchAllCategories=()=>{
        
           // const response=await fetch("");
           // const categories=await response.json();
-          const categories=[
-            {id:1,nameCate:"Khoa học"},
-            {id:2,nameCate:"Văn học"},
-            {id:3,nameCate:"Kinh tế"},
-        ]
+        //   const categories=[
+        //     {id:1,nameCate:"Khoa học"},
+        //     {id:2,nameCate:"Văn học"},
+        //     {id:3,nameCate:"Kinh tế"},
+        // ]
 
-          // const response=await fetch("http://localhost:3000/category/getAllCategories");
-          // const categories=await response.json();
+          const response=await fetch("http://localhost:3000/category/getAllCategories");
+          const categories=await response.json();
           
           dispatch(GetAllCategory(categories))
       } catch (err) {
