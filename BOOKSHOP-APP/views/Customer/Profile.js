@@ -9,7 +9,7 @@ import {
   Caption,
 } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetCustomerById } from '../../redux/actions/customersAction';
+import { fetchGetCustomerById ,DeleteAcount} from '../../redux/actions/customersAction';
 import { LogOut } from '../../redux/actions/accountAction';
 import { useEffect } from 'react';
 
@@ -21,7 +21,7 @@ const Profile = ({ navigation }) => {
   const customer = useSelector((state) => state.customer.customer)
   useEffect(() => {
     if(isCustomer == false && customer.id == null){
-      // console.log('sdsd')
+      console.log('sdsd')
       dispatch(fetchGetCustomerById(account.id))
     }
     console.log(customer)
@@ -29,6 +29,7 @@ const Profile = ({ navigation }) => {
   
 
   const handleCancel = () => {
+    dispatch(DeleteAcount())
     dispatch(LogOut())
     navigation.navigate("Login")
   }

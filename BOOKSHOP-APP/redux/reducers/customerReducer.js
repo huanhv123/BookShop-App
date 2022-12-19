@@ -21,6 +21,14 @@ export default (state = initialState, action) => {
                 isCustomer: true,
                 
             };
+        case 'Delete_Acount':
+                // console.log(action.payload)
+                return {
+                    ...state,
+                    customer: {},
+                    isCustomer: false,
+                    
+                };
         case 'CREATE_NEW_CUSTOMER':
             state.isSuccess = false
             if (action.payload.mse == true) {

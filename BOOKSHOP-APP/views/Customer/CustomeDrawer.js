@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { fetchGetCustomerById } from '../../redux/actions/customersAction';
+import { fetchGetCustomerById ,DeleteAcount } from '../../redux/actions/customersAction';
 import { LogOut } from '../../redux/actions/accountAction';
 const CustomDrawer = props => {
     const isCustomer = useSelector((state) => state.customer.isCustomer)
@@ -22,7 +22,7 @@ const CustomDrawer = props => {
     const dispatch = useDispatch();
     useEffect(() => {
         if(isCustomer == false && customer.id == null){
-            // console.log('sdsd')
+            console.log('sdsd')
             dispatch(fetchGetCustomerById(account.id))
         }
         console.log(customer)
@@ -51,7 +51,7 @@ const CustomDrawer = props => {
                             // fontFamily: 'Roboto-Medium',
                             marginBottom: 5,
                         }}>
-                        {customer?.nameCus}
+                        {customer.nameCus}
                     </Text>
                 </ImageBackground>
                 <View style={{  backgroundColor: '#fff', paddingTop: 10 }}>
@@ -59,6 +59,7 @@ const CustomDrawer = props => {
                 </View>
             </DrawerContentScrollView>
             <TouchableOpacity onPress={() => {
+                dispatch(DeleteAcount())
                 dispatch(LogOut())
                 props.navigation.navigate('Login')
                 }}

@@ -159,9 +159,9 @@ const Cart = ({ navigation }) => {
       total: parseInt(total+feeShip)  ,
   }
   console.log(newBill)
-  // dispatch(fetchCreateBills(newBill))
-  // await AsyncStorage.removeItem('cartItems');
-  // navigation.navigate("Home")
+  dispatch(fetchCreateBills(newBill))
+  await AsyncStorage.removeItem('cartItems');
+  navigation.navigate("Home")
   };
 
   const pustQuantity = async (id, quantityBuy) => {

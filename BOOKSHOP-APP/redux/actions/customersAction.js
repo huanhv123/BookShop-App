@@ -25,7 +25,7 @@ export const fetchGetCustomerById=(id)=>{
           // console.log(customer)
           // console.log(customer)
           // console.log(id)
-          dispatch(GetCustomerById(customer.data))
+          dispatch(GetCustomerById(customer))
           // console.log('esfaf')
       } catch (err) {
           console.error(err);
@@ -87,6 +87,14 @@ export const GetCustomerById = (customers) => {
       type: 'GET_CUSTOMER_BY_ID',
       payload:customers
     };
+};
+
+export const DeleteAcount = () => {
+  console.log("addd")
+  return {
+    type: 'Delete_Acount',
+    payload:""
+  };
 };
   
   export const CreatNewCustomer = (mes) => {

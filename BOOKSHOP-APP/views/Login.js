@@ -23,10 +23,10 @@ const Login = ({ navigation }) => {
   const CheckLogin = () => {
     if (isLogin) {
       if (account.type == "admin") {
-        // console.log("admin");
+        console.log(account.type);
         navigation.navigate("AdminScreen");
       } else if (account.type == "customer") {
-        // console.log("customer");
+        console.log(account.type);
         navigation.navigate("CustomerScreen");
       }
     } else {
