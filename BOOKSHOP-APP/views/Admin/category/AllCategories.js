@@ -92,7 +92,7 @@ const AllCategories = ({ navigation }) => {
                                     <TouchableOpacity
                                         onPress={() =>
                                             navigation.navigate("EditCategory", {
-                                                categories: {
+                                                category: {
                                                     id: item.id,
                                                     nameCate: item.nameCate,
                                                 },

@@ -63,10 +63,6 @@ const Profile = ({ navigation }) => {
           <Icon name="phone" color="#777777" size={20} />
           <Text style={{ color: "#777777", marginLeft: 20 }}>{customer.phoneCus}</Text>
         </View>
-        <View style={styles.row}>
-          <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>huan@email.com</Text>
-        </View>
       </View>
 
       <View style={styles.infoBoxWrapper}>
@@ -106,7 +102,9 @@ const Profile = ({ navigation }) => {
             <Text style={styles.menuItemText}>Lịch sử mua hàng</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile", {
+          customerInfo: customer
+        })}>
           <View style={styles.menuItem}>
             <Iconicon name="ios-settings-sharp" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Sửa thông tin cá nhân</Text>

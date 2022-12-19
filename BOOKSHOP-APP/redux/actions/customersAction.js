@@ -54,13 +54,14 @@ export const fetchCreateCustomers=(customers)=>{
   }
 }
 
-export const fetchUpdateCustomers=(customers)=>{
+export const fetchUpdateCustomers=(customer)=>{
   return (dispatch)=>{
     const updateData = async () => {
       try {
-        await axios.put(""+customers.id, customers)
+        await axios.put("http://"+ip+":3000/customer/"+customer.id, customer)
         .then(customers => {
-            dispatch(UpdateCustomer(customers.data))
+            // dispatch(UpdateCustomer(customers.data))
+            console.log(customers.data)
         });
       } catch (err) {
           console.error(err);
