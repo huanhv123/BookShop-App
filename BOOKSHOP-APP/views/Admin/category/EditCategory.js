@@ -10,9 +10,9 @@ import { async } from '@firebase/util';
 import { fetchUpdateCategories } from '../../../redux/actions/categoriesAction';
 const EditCategory = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { categories } = route.params;
-  const [id, setId] = useState(categories.id)
-  const [nameCate, setNameCate] = useState(categories.nameCate)
+  const { category } = route.params;
+  const [id, setId] = useState(category.id)
+  const [nameCate, setNameCate] = useState(category.nameCate)
  
   const handleEditCategory = () => {
     let newCategory = {

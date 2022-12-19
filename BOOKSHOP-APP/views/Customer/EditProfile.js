@@ -8,8 +8,39 @@ import {
   StyleSheet,
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUpdateCustomers } from "../../redux/actions/customersAction";
+import { fetchGetCategoryByID } from "../../redux/actions/categoriesAction";
 
-const EditProfile = ({navigation}) => {
+
+const EditProfile = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const {customerInfo} = route.params;
+  const [nameCus, setNameCus] = useState(customerInfo.nameCus);
+  const [adderss, setAddress] = useState(customerInfo.adderss);
+  const [phoneCus, setPhoneCus] = useState(customerInfo.phoneCus);
+  const [BoD, setBoD] = useState(customerInfo.BoD);
+  const [sexCus, setSexCus] = useState(customerInfo.sexCus);
+  const [id, setId] = useState(customerInfo.id);
+  
+
+  const handleEditProfile = () => {
+    let newProfile = {
+      id: id,
+      nameCus: nameCus,
+      adderss: adderss,
+      phoneCus: phoneCus,
+      BoD: BoD,
+      sexCus: sexCus,
+    };
+
+  dispatch(fetchUpdateCustomers(newProfile));
+  // dispatch(fetchGetCategoryByID());
+  };
+  const handleCancel = () => {
+    navigation.goBack();
+  };
   return (
     <View
       style={{
@@ -50,6 +81,8 @@ const EditProfile = ({navigation}) => {
           <TextInput
             placeholder="Tên"
             //defaultValue={name}
+            onChangeText={(nameCus) => setNameCus(nameCus)}
+            value={nameCus}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -57,10 +90,12 @@ const EditProfile = ({navigation}) => {
             }}
           />
         </View>
-        <View style={{ paddingVertical: 10 }}>
+        <View style={{ paddingBottom: 10 }}>
           <TextInput
-            placeholder="Email"
-            //defaultValue={accountName}
+            placeholder="Năm sinh"
+            //defaultValue={name}
+            onChangeText={(BoD) => setBoD(BoD)}
+            value={BoD}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -72,6 +107,8 @@ const EditProfile = ({navigation}) => {
           <TextInput
             placeholder="Giới tính"
             //defaultValue={accountName}
+            onChangeText={(sex) => setSexCus(sex)}
+            value={sexCus}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -82,6 +119,8 @@ const EditProfile = ({navigation}) => {
         <View style={{ paddingVertical: 10 }}>
           <TextInput
             placeholder="Địa chỉ"
+            onChangeText={(add) => setAddress(add)}
+            value={adderss}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -92,6 +131,8 @@ const EditProfile = ({navigation}) => {
         <View style={{ paddingVertical: 10 }}>
           <TextInput
             placeholder="Số điện thoại"
+            onChangeText={(phone) => setPhoneCus(phone)}
+            value={phoneCus}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -125,12 +166,12 @@ const EditProfile = ({navigation}) => {
         </Text>
       </View> */}
       <View style={styles.btnContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleEditProfile()}>
           <View style={styles.btn}>
             <Text style={styles.btnText}>Chỉnh sửa</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigation.navigate("Profile")}>
+        <TouchableOpacity onPress={() => handleCancel()}>
           <View style={styles.btn2}>
             <Text style={styles.btnText}>Hủy</Text>
           </View>

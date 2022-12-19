@@ -91,13 +91,6 @@ export const CreatNewAccount = (mes) => {
     };
 };
 
-export const LoginAccount = (mes) => {
-  return {
-    type: 'LOGIN_ACCOUNT',
-    payload:mes
-  };
-};
-
 export const UpdateAccount = (mes) => {
   return {
       type: 'UPDATE_ACCOUNT',
