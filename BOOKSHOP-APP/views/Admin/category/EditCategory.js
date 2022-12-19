@@ -21,7 +21,7 @@ const EditCategory = ({ route, navigation }) => {
     }
     // console.log(newBook)
     dispatch(fetchUpdateCategories(newCategory));
-    // dispatch(fetchAllBooks());
+    dispatch(fetchAllBooks());
   }
   const handleCancel = () => {
     navigation.goBack()
@@ -39,7 +39,7 @@ const EditCategory = ({ route, navigation }) => {
 //   }
     <View style={styles.CRUDContainer}>
       <View style={styles.formContainer}>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInput 
           placeholder="ID" 
           style={styles.inputText}
@@ -47,7 +47,7 @@ const EditCategory = ({ route, navigation }) => {
           value={id}
           editable={false}
           />
-        </View>
+        </View> */}
         <View style={styles.inputContainer}>
           <TextInput placeholder="Name" style={styles.inputText}
             onChangeText={(nameCate) => setNameCate(nameCate)} value={nameCate} />

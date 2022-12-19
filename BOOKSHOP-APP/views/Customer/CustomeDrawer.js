@@ -36,7 +36,7 @@ const CustomDrawer = props => {
                         style={{
                             color: '#fff',
                             fontSize: 18,
-                            fontFamily: 'Roboto-Medium',
+                            // fontFamily: 'Roboto-Medium',
                             marginBottom: 5,
                         }}>
                         John Doe
@@ -53,7 +53,7 @@ const CustomDrawer = props => {
                     <Text
                         style={{
                             fontSize: 20,
-                            fontFamily: 'Times-New-Roman',
+                            // fontFamily: 'Times-New-Roman',
                             marginLeft: 5,
                         }}>
                         Sign Out

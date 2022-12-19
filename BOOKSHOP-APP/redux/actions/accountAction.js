@@ -1,5 +1,5 @@
 import axios from "axios";
- 
+var ip="localhost"
 
 export const fetchAllAccounts=()=>{
   return (dispatch)=>{
@@ -17,13 +17,30 @@ export const fetchAllAccounts=()=>{
   }
 }
 
+export const fetchLoginAccount = (account) => {
+  return (dispatch) => {
+    const getData = async () => {
+      try {
+        await axios.post("http://"+ip+":3000/account/login", account)
+        .then(account => {
+          console.log(account.data)
+            dispatch(LoginAccount(account.data))
+        });
+      } catch (err) {
+          console.error(err);
+      }
+  };
+  getData();
+  }
+}
+
 export const fetchCreateAccounts=(account)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("", account)
+        await axios.post("http://"+ip+":3000/account/createAccount", account)
         .then(account => {
-          console.log(account.data)
+          // console.log(account.data)
             dispatch(CreatNewAccount(account.data))
         });
       } catch (err) {
@@ -61,7 +78,12 @@ export const GetAccount = (accounts) => {
   };
 };
 
-
+export const LoginAccount = (account) => {
+  return {
+    type: 'LOGIN_ACCOUNT',
+    payload:account
+  };
+};
 
 export const CreatNewAccount = (mes) => {
     return {

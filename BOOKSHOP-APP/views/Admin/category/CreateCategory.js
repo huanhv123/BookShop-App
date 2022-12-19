@@ -1,7 +1,7 @@
 
 
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { firebase } from '../../../config/firebase';
@@ -10,12 +10,16 @@ import { getStorage, uploadString, ref, getDownloadURL, uploadBytesResumable } f
 import { async } from '@firebase/util';
 import { fetchAllBooks, fetchCreateBooks } from "../../../redux/actions/bookAction";
 import { fetchCreateCategories } from '../../../redux/actions/categoriesAction';
+import { Value } from 'react-native-reanimated';
 
 
 const CreateCategory = ({ navigation }) => {
     const dispatch = useDispatch();
+   
+
     const [id, setId] = useState("")
     const [nameCate, setNameCate] = useState("")
+    
     
 
     const handleAddBook = () => {
@@ -25,7 +29,7 @@ const CreateCategory = ({ navigation }) => {
     
         console.log(newCategory)
         dispatch(fetchCreateCategories(newCategory));
-        // dispatch(fetchAllBooks());
+        dispatch(fetchAllBooks());
     }
     const handleCancel = () => {
         navigation.goBack()
@@ -35,12 +39,13 @@ const CreateCategory = ({ navigation }) => {
 
         <View style={styles.CRUDContainer}>
             <View style={styles.formContainer}>
-                <View style={styles.inputContainer}>
+                {/* <View style={styles.inputContainer}>
                     <TextInput
                         placeholder="ID"
                         style={styles.inputText}
+                        se
                         onChangeText={(id) => setId(id)} />
-                </View>
+                </View> */}
                 <View style={styles.inputContainer}>
                     <TextInput placeholder="Name" style={styles.inputText}
                         onChangeText={(nameCate) => setNameCate(nameCate)} />

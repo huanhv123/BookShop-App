@@ -53,6 +53,7 @@ const customerController={
                 "phoneCus": req.body.phoneCus,
                 "sexCus": req.body.sexCus
               }
+            //   console.log(newCus);
             await db.collection("customers").doc(req.params.id).update(newCus);
             res.status(200).json({mse:true})
         } catch (err) {

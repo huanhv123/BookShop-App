@@ -1,5 +1,6 @@
 import axios from "axios";
-  
+var ip = "localhost"  
+
 export const fetchCustomers=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -8,6 +9,25 @@ export const fetchCustomers=()=>{
           const customers=await response.json();
         
           dispatch(GetCustomer(customers))
+      } catch (err) {
+          console.error(err);
+      }
+  };
+  getData();
+  }
+}
+
+export const fetchGetCustomerById=(id)=>{
+  return (dispatch)=>{
+    const getData = async () => {
+      try {
+          const response=await fetch("http://"+ip+":3000/customer/getCustomer/"+id);
+          const customer=await response.json();
+          // console.log(customer)
+          // console.log(customer)
+          // console.log(id)
+          dispatch(GetCustomerById(customer))
+          // console.log('esfaf')
       } catch (err) {
           console.error(err);
       }
@@ -62,7 +82,12 @@ export const GetCustomer = (customers) => {
     };
   };
   
-  
+export const GetCustomerById = (customers) => {
+    return {
+      type: 'GET_CUSTOMER_BY_ID',
+      payload:customers
+    };
+};
   
   export const CreatNewCustomer = (mes) => {
       return {

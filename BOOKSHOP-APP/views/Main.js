@@ -26,14 +26,15 @@ import { DrawerLayout } from 'react-native-gesture-handler';
  const CustomerNavigatorScreen = () => {
     const CustomerNavigator = createDrawerNavigator();
     return (
-        <CustomerNavigator.Navigator drawerContent={props => <CustomDrawer   {...props}/>} 
+        <CustomerNavigator.Navigator 
+        // drawerContent={props => <CustomDrawer   {...props}/>} 
         screenOptions={{
             drawerActiveBackgroundColor: '#E5E5E5',
             drawerActiveTintColor: '#000',
             drawerInactiveTintColor: '#333',
             drawerLabelStyle: {
               marginLeft: -25,
-              fontFamily: 'Roboto-Medium',
+            //   fontFamily: 'Roboto-Medium',
               fontSize: 15,
             }, 
         }}>

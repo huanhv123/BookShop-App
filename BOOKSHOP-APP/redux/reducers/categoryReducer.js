@@ -1,8 +1,8 @@
 const initialState ={
     categories:[
-        {id:1,nameCate:"Khoa học"},
-        {id:2,nameCate:"Văn học"},
-        {id:3,nameCate:"Kinh tế"},
+        // {id:1,nameCate:"Khoa học"},
+        // {id:2,nameCate:"Văn học"},
+        // {id:3,nameCate:"Kinh tế"},
     ],
     listcategory:[],
     categorie: {}
@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 categories: [...action.payload],
-                isSuccess: false,
+                // isSuccess: false,
             };
         case 'CREATE_NEW_CATEGORY':
             state.isSuccess = false

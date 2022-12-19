@@ -26,16 +26,22 @@ const AllCategories = ({ navigation }) => {
     const dispatch = useDispatch();
     let isSuccess = useSelector((state) => state.category.isSuccess)
     useEffect(() => {
-        // dispatch(fetchAllCategories())
+        dispatch(fetchAllCategories())
     }, [isSuccess]);
 
     const handleSeachCategory = (key) => {
-        // dispatch(fetchSearchCategory(key))
+        if (key.length > 0) {
+            dispatch(fetchSearchCategory(key))
+        }
+        else {
+            dispatch(fetchAllCategories())
+        }
+        
     }
     const handleDeleteCategories = (id) => {
         // console.log(id)
-        // dispatch(fetchDeleteCategories(id))
-        // dispatch(fetchAllBooks())
+        dispatch(fetchDeleteCategories(id))
+        dispatch(fetchAllCategories())
     }
     return (
 
@@ -97,7 +103,7 @@ const AllCategories = ({ navigation }) => {
                                         <Icon name="edit" size={30} color={"blue"} />
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => fetchDeleteCategories(item.id)}>
+                                    <TouchableOpacity onPress={() => handleDeleteCategories(item.id)}>
                                         <Icon name="trash" size={30} color={"red"} />
                                     </TouchableOpacity>
                                 </View>
