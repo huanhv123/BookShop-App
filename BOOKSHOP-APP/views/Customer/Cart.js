@@ -18,7 +18,8 @@ import { COLOURS } from '../../Coler';
 // import { items } from '../data/Database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ref } from 'firebase/storage';
-
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCreateBills } from '../../redux/actions/billAction';
 let items = [
   {
     id: 1,
@@ -78,7 +79,7 @@ const Cart = () => {
   const [nameCus, setNameCus] = useState("")
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
-
+  const dispatch = useDispatch();
   useEffect(() => {
     // setData=async ()=>{
     //   await AsyncStorage.setItem('cartItems', JSON.stringify(temp));
@@ -127,15 +128,25 @@ const Cart = () => {
   };
 
   const checkOut = async () => {
-    // await AsyncStorage.removeItem('cartItems');
-    // getDataFromDB();
+
+    let items = await AsyncStorage.getItem('cartItems');
+    items = JSON.parse(items);
+    if(!items){
+      items=[]
+    }
+
     let newBill = {
-      nameCustomer: nameCus,
+      idCus:'sdfsdf',
+      nameCus: nameCus,
       address: address,
-      phone: phone,
+      phoneCus: phone,
+      products:items,
       total: parseInt(total+feeShip)  ,
   }
   console.log(newBill)
+  dispatch(fetchCreateBills(newBill))
+    // await AsyncStorage.removeItem('cartItems');
+    // getDataFromDB();
   };
 
   const pustQuantity = async (id, quantityBuy) => {

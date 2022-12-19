@@ -16,9 +16,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const CustomDrawer = props => {
     return (
-        <View >
-            <DrawerContentScrollView
-                {...props}
+        <View style={{flex:1}}>
+            <DrawerContentScrollView  {...props}
                 contentContainerStyle={{ backgroundColor: '#fff', flex: 1 }}>
                 <ImageBackground
                     source={require('../../assets/images/background.png')}
@@ -36,31 +35,30 @@ const CustomDrawer = props => {
                         style={{
                             color: '#fff',
                             fontSize: 18,
-                            fontFamily: 'Roboto-Medium',
+                            // fontFamily: 'Roboto-Medium',
                             marginBottom: 5,
                         }}>
                         John Doe
                     </Text>
                 </ImageBackground>
-                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
+                <View style={{  backgroundColor: '#fff', paddingTop: 10 }}>
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Home')}
+            <TouchableOpacity onPress={() => props.navigation.navigate('Login')}
                 style={{ paddingVertical: 15, marginLeft: 17 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Ionicons name="exit-outline" size={30} />
                     <Text
                         style={{
                             fontSize: 20,
-                            fontFamily: 'Times-New-Roman',
+                            // fontFamily: 'Roboto-Medium',
                             marginLeft: 5,
                         }}>
-                        Sign Out
+                        Đăng xuất
                     </Text>
                 </View>
             </TouchableOpacity>
-
         </View>
     );
 };

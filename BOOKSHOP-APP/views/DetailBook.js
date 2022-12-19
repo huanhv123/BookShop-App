@@ -213,7 +213,7 @@ const DetailBook = ({navigation, route}) => {
             backgroundColor: '#fff',
             width:'100%',
             borderTopWidth:1,
-              borderColor:'gray',
+            borderColor:'gray',
           }}>
           <View
             style={{

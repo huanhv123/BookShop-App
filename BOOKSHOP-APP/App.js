@@ -13,12 +13,13 @@ import Statistical from './views/Admin/Statistical';
 import Home from './views/Home';
 import DetailBook from './views/DetailBook';
 import Cart from './views/Customer/Cart';
+import CreateBook from './views/Admin/book/CreateBook';
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
 
     <Provider store={store}>
-      <NavigationContainer>
+      {/* <NavigationContainer>
        <Stack.Navigator
           screenOptions={{
             headerShown: false,
@@ -29,8 +30,8 @@ export default function App() {
           <Stack.Screen name="CustomerScreen" component={CustomerNavigatorScreen} />
           <Stack.Screen name="AdminScreen" component={AdminNavigatorScreen} />
         </Stack.Navigator>
-      </NavigationContainer>
-      {/* <Cart/> */}
+      </NavigationContainer> */}
+      <CreateBook/>
     </Provider> 
 
   );

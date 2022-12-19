@@ -1,5 +1,5 @@
 import axios from "axios";
-  
+ip="localhost"
 export const fetchAllBills=()=>{
   return (dispatch)=>{
     const getData = async () => {
@@ -36,10 +36,10 @@ export const fetchCreateBills=(bill)=>{
   return (dispatch)=>{
     const newData = async () => {
       try {
-        await axios.post("", bill)
+        await axios.post("http://"+ip+":3000/bill/CreateBill", bill)
         .then(bill => {
           console.log(bill.data)
-            dispatch(CreatNewBill(bill.data))
+            // dispatch(CreatNewBill(bill.mse))
         });
       } catch (err) {
           console.error(err);
@@ -64,23 +64,6 @@ export const fetchUpdateBills=(bill)=>{
       }
   };
   updateData();
-  }
-}
-
-export const fetchDeleteBills=(id)=>{
-  return (dispatch)=>{
-    const deleteData = async () => {
-      try {
-        await axios.delete(""+id)
-        .then(bill => {
-            dispatch(DeleteBill(bill.data))
-        });
-      } catch (err) {
-          console.error(err);
-          dispatch(DeleteBill(false))
-      }
-  };
-  deleteData();
   }
 }
 
@@ -114,13 +97,6 @@ export const CreatNewBill = (mes) => {
 export const UpdateBill = (mes) => {
   return {
       type: 'UPDATE_BILL',
-      payload: mes,
-  };
-};
-
-export const DeleteBill = (mes) => {
-  return {
-      type: 'DELETE_BILL',
       payload: mes,
   };
 };

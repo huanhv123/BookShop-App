@@ -161,12 +161,13 @@ const billController={
                 "address": req.body.address,
                 "total": req.body.total,
                 "products": req.body.products,
-                "status": "Đã thanh toán",
+                "status": "Chưa thanh toán",
                 "phoneCus": req.body.phoneCus,
                 "nameCus": req.body.nameCus,
                 "datePayment": new Date(),
                 "idCus":  req.body.idCus
             }
+            // console.log(newBill)
             await db.collection("bills").add(newBill);
             res.status(200).json({ mse: true })
         } catch (err) {
