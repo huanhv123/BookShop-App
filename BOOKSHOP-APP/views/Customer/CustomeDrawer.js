@@ -42,7 +42,7 @@ const CustomDrawer = props => {
                         John Doe
                     </Text>
                 </ImageBackground>
-                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
+                <View style={{  backgroundColor: '#fff', paddingTop: 10 }}>
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
@@ -53,14 +53,12 @@ const CustomDrawer = props => {
                     <Text
                         style={{
                             fontSize: 20,
-                            // fontFamily: 'Times-New-Roman',
                             marginLeft: 5,
                         }}>
                         Đăng xuất
                     </Text>
                 </View>
             </TouchableOpacity>
-
         </View>
     );
 };

@@ -35,8 +35,6 @@ import { DrawerLayout } from 'react-native-gesture-handler';
             drawerActiveTintColor: '#000',
             drawerInactiveTintColor: '#333',
             drawerLabelStyle: {
-            //   marginLeft: -25,
-            //   fontFamily: 'Times-New-Roman',
               fontSize: 15,
             //   marginTop: 150,
             }, 
@@ -87,8 +85,10 @@ const HomeNavigatorScreen = () => {
                 options={{
                     headerShown: false
                 }} />
-            <HomeNavigator.Screen name='ProfileHome' component={Profile} />
-            <HomeNavigator.Screen name='CartHome' component={Cart} />
+            <HomeNavigator.Screen name='EditProfile' component={EditProfile}
+                options={{
+                    headerShown: false
+                }} />
         </HomeNavigator.Navigator>
     );
 }
