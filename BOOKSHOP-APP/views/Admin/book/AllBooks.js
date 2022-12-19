@@ -53,11 +53,16 @@ const AllBooks = ({ navigation }) => {
           />
           <TouchableOpacity
             onPress={() => handleSeachBook(search)}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: "55%",
+            }}
           >
             <Ionicons
               name="search"
               color="#000"
-              size={40}
+              size={30}
               justifyContent="center"
               alignItems="center"
               style={styles.iconSearch}
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
   },
   leftHeader: {
     // backgroundColor:"yellow",
-    width: "88%",
+    width: "70%",
     // marginBottom: 10,
     borderRadius: 10,
     justifyContent: "space-between",
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#000',
     borderWidth: 2,
-    width: "85%",
+    width: "95%",
     height: 50,
     // backgroundColor:"green",
     paddingLeft: "6%",
@@ -170,7 +175,7 @@ const styles = StyleSheet.create({
   },
   iconSearch: {
     // backgroundColor:"red",
-    width: "13%",
+    width: "43%",
   },
   rightHeader: {
     // backgroundColor:"green",
